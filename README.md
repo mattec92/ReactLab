@@ -1,6 +1,8 @@
 # ReactLab
 Playground for React (and Node)
 
+Currently hosted at http://mattec.se/ and http://mattec.se/testapp/.
+
 #####Run:
 ```
 npm install
