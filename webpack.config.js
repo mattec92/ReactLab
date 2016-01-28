@@ -7,9 +7,9 @@ var path = require('path');
 module.exports = {
     context: __dirname,
     devtool: debug ? "inline-sourcemap" : null,
-    entry: path.resolve(__dirname, 'app/main.js'),
+    entry: path.resolve(__dirname, 'testapp/app/main.js'),
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'testapp/build'),
         filename: 'bundle.js'
     },
     module: {
