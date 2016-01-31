@@ -36,3 +36,5 @@ node_modules
 nginx
 
 bundle.js
+robots.txt
+sitemap.xml
