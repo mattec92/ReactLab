@@ -25,7 +25,7 @@ let ContactForm = React.createClass({
   	},
 
   	handleSend() {
-  		alert(this.state.email + " " + this.state.subject + " " + this.state.message);
+  		alert("This function is not yet completed. You entered: " + this.state.email + " " + this.state.subject + " " + this.state.message);
   	},
 
 	render() {
