@@ -24,31 +24,25 @@ let Card = React.createClass({
 	render() {
 		const styles = {
 			root: {        
-    			//maxWidth: '300px',
-    			padding: '20px',
+    			padding: '50px',
+    			marginBottom: '50px',
 				textAlign: 'center',
     		},
 			logo: {
 				width: '60px',
 				height: '60px',
-				margin: '10px auto',
 			},
 			description: {
+				marginTop: '20px',
 			},
 			link: {
-
+				marginTop: '20px',
 			}
 		};
 
-		var mainClassName = "col-sm-2";
-
-		if (this.props.isFirst) {
-			mainClassName += " col-md-offset-3";
-		}
-
 		return (
 			<div 
-				className={mainClassName}>
+				className="col-sm-4">
 					<Paper 
 	        			style={styles.root}
 						zDepth={this.state.zDepth}
