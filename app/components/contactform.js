@@ -71,14 +71,12 @@ let ContactForm = React.createClass({
 					style={styles.textField}
       				hintText="Dear Mattias, ..."
       				floatingLabelText="Message"
-      				multiLine={true}
-      				rows={1}
-      				rowsMax={4}
       				onChange={this.handleMessageChange}/>
       			<br/>
       			<RaisedButton 
 					style={styles.button}
       				label="Send"
+                    secondary={true}
       				onClick={this.handleSend} />
 			</div>
 		);

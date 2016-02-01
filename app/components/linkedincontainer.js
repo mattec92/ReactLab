@@ -59,6 +59,7 @@ let LinkedInContainer = React.createClass({
 					style={styles.button}
       				label="Mattias Cederlund on LinkedIn"
           			linkButton={true}
+          			secondary={true}
       				href="https://www.linkedin.com/in/mattiascederlund1" />
 			</div>
 		);

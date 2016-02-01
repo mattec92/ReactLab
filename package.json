@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "webpack",
+    "prodbuild": "NODE_ENV=production webpack",
     "start": "node server.js",
     "dev": "webpack-dev-server --inline --hot --config webpack.config.js --content-base / --devtool eval --port 8080"
   },

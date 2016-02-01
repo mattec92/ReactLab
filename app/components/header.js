@@ -7,18 +7,25 @@ let Header = React.createClass({
 				width: '100%',
 				backgroundColor: '#455a64',
 				margin: '0px',
+				padding: '0px',
+			},
+			background: {
+				backgroundImage: 'url("img/stockholm.jpg")',
+				backgroundRepeat: 'no-repeat',
+				backgroundPosition: 'center center',
 				textAlign: 'center',
-				padding: '20px',
+				padding: '50px',
 			},
 			image: {
 				width: '100px',
 				height: '100px',
 			},
 			text: {
-				fontSize: 40,
+				fontSize: 48,
 				color: '#fafafa',
-				marginTop: '10px',
+				marginTop: '20px',
 				fontFamily: 'Courier New',
+				textShadow: '2px 2px #000000',
 			},
 		};
 
@@ -26,13 +33,16 @@ let Header = React.createClass({
 			<div 
 				style={styles.root}
 				className="page-header">
-				<img 
-					style={styles.image} 
-					src="img/m_logo.png" />
-				<h1 
-					style={styles.text}>
-					Mattias Cederlund
-				</h1>
+				<div 
+					style={styles.background}>
+					<img 
+						style={styles.image} 
+						src="img/m_logo.png" />
+					<h1 
+						style={styles.text}>
+						Mattias Cederlund
+					</h1>
+				</div>
 			</div>
 		);
 	}
