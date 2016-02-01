@@ -2,6 +2,24 @@ import React from 'react';
 import Colors from 'material-ui/lib/styles'
 
 let Footer = React.createClass({
+	getInitialState() {
+    	return {
+			scale: 'scale(1.0)',
+    	};
+  	},
+
+  	_onMouseEnter() {
+    	this.setState({
+			scale: 'scale(1.2)'
+    	});
+  	},
+
+  	_onMouseLeave() {
+   		this.setState({
+			scale: 'scale(1.0)',
+    	});
+  	},
+
 	render() {
 		const styles = {
 			root: {
@@ -19,10 +37,11 @@ let Footer = React.createClass({
 				width: '32px',
 				height: '32px',
 				marginTop: '10px',
+				transform: this.state.scale,
 			},
 		};
 
-		var currentYear = new Date().getFullYear();
+		const currentYear = new Date().getFullYear();
 		
 		return (
 			<footer 
@@ -34,10 +53,12 @@ let Footer = React.createClass({
 				</p>
 				<a 
 					href="https://github.com/mattec92/ReactLab"
-					target="_blank">
+					target="_blank"
+	       			onMouseEnter={this._onMouseEnter}
+	        		onMouseLeave={this._onMouseLeave}>
 					<img 
 						style={styles.image}
-						src="img/github_logo_light_32.png"
+						src="img/github_logo_light_64.png"
 						alt="Github logo"  />
 				</a>
 			</footer>
