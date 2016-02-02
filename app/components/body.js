@@ -6,17 +6,17 @@ import ContactContainer from './contactcontainer.js';
 import Footer from './footer.js';
 
 let Body = React.createClass({
-	render() {
-	    return (
-		    <div>
-		    	<Header />
-				<Lead />
-				<CardContainer /> 
-				<ContactContainer />
-		    	<Footer />
-		    </div>
-	    )
-  	}
+    render() {
+        return (
+            <div>
+                <Header />
+                <Lead />
+                <CardContainer />
+                <ContactContainer />
+                <Footer />
+            </div>
+        )
+    }
 });
 
 export default Body;

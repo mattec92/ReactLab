@@ -8,7 +8,7 @@ import App from './components/app.js';
 injectTapEventPlugin();
 
 ReactDOM.render((
-  <Router history={createHashHistory({queryKey: false})}>
-    <Route path="/" component={App} />
-  </Router>
+    <Router history={createHashHistory({queryKey: false})}>
+        <Route path="/" component={App}/>
+    </Router>
 ), document.getElementById('app'));
