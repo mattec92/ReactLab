@@ -4,8 +4,8 @@ import Colors from 'material-ui/lib/styles'
 let Footer = React.createClass({
 	getInitialState() {
     	return {
-			scale: 'scale(1.0)',
-    	};
+			scale: 'scale(1.0)'
+		};
   	},
 
   	_onMouseEnter() {
@@ -16,8 +16,8 @@ let Footer = React.createClass({
 
   	_onMouseLeave() {
    		this.setState({
-			scale: 'scale(1.0)',
-    	});
+			scale: 'scale(1.0)'
+		});
   	},
 
 	render() {
@@ -26,19 +26,19 @@ let Footer = React.createClass({
 				width: '100%',
 				textAlign: 'center',
 				padding: '20px',
-				backgroundColor: '#212121',
+				backgroundColor: '#212121'
 			},
 			text: {
 				color: '#FFFFFF',
 				fontSize: 14,
-        		lineHeight: '22px',
+        		lineHeight: '22px'
 			},
 			image: {
 				width: '32px',
 				height: '32px',
 				marginTop: '10px',
-				transform: this.state.scale,
-			},
+				transform: this.state.scale
+			}
 		};
 
 		const currentYear = new Date().getFullYear();

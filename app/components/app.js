@@ -7,8 +7,8 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 let App = React.createClass({	
 	getInitialState() {
     	return {
-    		open: false,
-    	};
+    		open: false
+		};
   	},
 
 	toggleLeftNav() {
@@ -18,17 +18,17 @@ let App = React.createClass({
 	render() {
 		const styles = {
 			root: {
-				position: 'relative',
+				position: 'relative'
 			},
 			appbar: {
 				position: 'absolute',
 				top: 0,
-				backgroundColor: 'rgba(0,0,0,0)',
+				backgroundColor: 'rgba(0,0,0,0)'
 			},
 			body: {
 				position: 'absolute',
-				top: 0,
-			},
+				top: 0
+			}
 		};
 
 	    return (

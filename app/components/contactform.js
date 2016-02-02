@@ -8,8 +8,8 @@ let ContactForm = React.createClass({
     	return {
     		email: '', 
     		subject: '',
-    		message: '',
-    	};
+    		message: ''
+		};
   	},
 
   	handleEmailChange(e) {
@@ -32,19 +32,19 @@ let ContactForm = React.createClass({
 		const styles = {
 			root: {
 				padding: '50px',
-                textAlign: 'center',
+                textAlign: 'center'
 			},
 			header: {
         		fontWeight: Typography.fontWeightLight,
-                fontFamily: 'Roboto',
+                fontFamily: 'Roboto'
 			},
 			textField: {
-				maxWidth: '600px',
+				maxWidth: '600px'
 			},
 			button: {
 				marginTop: '30px',
-				marginBottom: '30px',
-			},
+				marginBottom: '30px'
+			}
 		};
 
 		return (

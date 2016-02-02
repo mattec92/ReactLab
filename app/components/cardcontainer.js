@@ -6,8 +6,8 @@ let CardContainer = React.createClass({
 		const styles = {
 			root: {
 				width: '100%',
-				padding: '50px 50px 0px 50px',
-			},
+				padding: '50px 50px 0px 50px'
+			}
 		};
 
 		return (

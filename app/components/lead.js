@@ -7,13 +7,13 @@ let Lead = React.createClass({
 			container: {
 				width: '100%',
 				backgroundColor: '#EEEEEE',
-			   	padding: '50px',
+			   	padding: '50px'
 			},
 			text: {
 				textAlign: 'center',
         		fontWeight: Typography.fontWeightLight,
-				fontFamily: 'Roboto',
-			},
+				fontFamily: 'Roboto'
+			}
 		};
 
 		return (

@@ -5,20 +5,20 @@ import Typography from 'material-ui/lib/styles';
 let Card = React.createClass({
 	getInitialState() {
     	return {
-      		zDepth: 2,
-    	};
+      		zDepth: 2
+		};
   	},
 
   	_onMouseEnter() {
     	this.setState({
-      		zDepth: 4,
-    	});
+      		zDepth: 4
+		});
   	},
 
   	_onMouseLeave() {
    		this.setState({
-      		zDepth: 2,
-    	});
+      		zDepth: 2
+		});
   	},
 
 	render() {
@@ -26,17 +26,17 @@ let Card = React.createClass({
 			root: {        
     			padding: '50px',
     			marginBottom: '50px',
-				textAlign: 'center',
-    		},
+				textAlign: 'center'
+			},
 			logo: {
 				width: '60px',
-				height: '60px',
+				height: '60px'
 			},
 			description: {
-				marginTop: '20px',
+				marginTop: '20px'
 			},
 			link: {
-				marginTop: '20px',
+				marginTop: '20px'
 			}
 		};
 

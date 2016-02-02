@@ -8,11 +8,11 @@ let LinkedInContainer = React.createClass({
 		const styles = {
 			root: {
 				padding: '50px',
-                textAlign: 'center',
+                textAlign: 'center'
 			},
 			header: {
         		fontWeight: Typography.fontWeightLight,
-                fontFamily: 'Roboto',	
+                fontFamily: 'Roboto'
 			},
 			imageContainer: {
 				width: '150px',
@@ -21,19 +21,19 @@ let LinkedInContainer = React.createClass({
     			overflow: 'hidden',
 				marginTop: '20px',
 				marginLeft: 'auto',
-				marginRight: 'auto',
+				marginRight: 'auto'
 			},
 			image: {
 				width: '150px',
-				height: '150px',
+				height: '150px'
 			},
 			text: {
-				marginTop: '20px',
+				marginTop: '20px'
 			},
 			button: {
 				marginTop: '30px',
-				marginBottom: '30px',
-			},
+				marginBottom: '30px'
+			}
 		};
 
 		return (

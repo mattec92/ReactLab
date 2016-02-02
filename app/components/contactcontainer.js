@@ -9,8 +9,8 @@ let ContactContainer = React.createClass({
 			   	width: '100%',
 				margin: '0px',
 				padding: '0px',
-				backgroundColor: '#EEEEEE',
-    		},
+				backgroundColor: '#EEEEEE'
+			}
 		};
 
 		return (

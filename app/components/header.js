@@ -3,20 +3,20 @@ import React from 'react';
 let Header = React.createClass({
 	getInitialState() {
     	return {
-  			attributionOpacity: 0.0,
-    	};
+  			attributionOpacity: 0.0
+		};
   	},
 
   	setAttributionVisible() {
   		this.setState({
-  			attributionOpacity: 1.0,
-  		});
+  			attributionOpacity: 1.0
+		});
   	},
 
   	setAttributionGone() {
   		this.setState({
-  			attributionOpacity: 0.0,
-  		});
+  			attributionOpacity: 0.0
+		});
   	},
 
 	render() {
@@ -26,25 +26,25 @@ let Header = React.createClass({
 				backgroundColor: '#455a64',
 				margin: '0px',
 				padding: '0px',
-				position: 'relative',
+				position: 'relative'
 			},
 			background: {
 				backgroundImage: 'url("img/stockholm.jpg")',
 				backgroundRepeat: 'no-repeat',
 				backgroundPosition: 'center center',
 				textAlign: 'center',
-				padding: '50px',
+				padding: '50px'
 			},
 			image: {
 				width: '100px',
-				height: '100px',
+				height: '100px'
 			},
 			text: {
 				fontSize: 48,
 				color: '#fafafa',
 				marginTop: '20px',
 				fontFamily: 'Courier New',
-				textShadow: '2px 2px #000000',
+				textShadow: '2px 2px #000000'
 			},
 			attribution: {
 				position: 'absolute',
@@ -53,12 +53,12 @@ let Header = React.createClass({
 				fontSize: 12,
 				color: '#FFFFFF',
 				textAlign: 'right',
-				opacity: this.state.attributionOpacity,
+				opacity: this.state.attributionOpacity
 			},
 			attributionLink: {
 				fontSize: 12,
 				color: '#FFFFFF'
-			},
+			}
 		};
 
 		return (
