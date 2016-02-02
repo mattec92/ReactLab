@@ -1,13 +1,28 @@
 import React from 'react';
-import Body from './body.js';
+import Footer from './footer.js';
 import AppBar from 'material-ui/lib/app-bar';
 import LeftNav from 'material-ui/lib/left-nav';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import ListItem from 'material-ui/lib/lists/list-item';
+import List from 'material-ui/lib/lists/list';
+import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
+
+const SelectableList = SelectableContainerEnhance(List);
 
 let App = React.createClass({
+
+    getAppBarColor(path) {
+        if (path === "/") {
+            return 'rgba(0,0,0,0)';
+        }
+        else {
+            return '#00bcd4';
+        }
+    },
+
     getInitialState() {
         return {
-            open: false
+            open: false,
+            appbarColor: this.getAppBarColor(this.props.location.pathname)
         };
     },
 
@@ -15,27 +30,36 @@ let App = React.createClass({
         this.setState({open: !this.state.open});
     },
 
+    handleRequestChangeList(event, value) {
+        this.props.history.push(value);
+        this.setState({
+            open: false,
+            appbarColor: this.getAppBarColor(value)
+        });
+    },
+
     render() {
         const styles = {
             root: {
-                position: 'relative'
+                position: 'relative',
             },
             appbar: {
                 position: 'absolute',
                 top: 0,
-                backgroundColor: 'rgba(0,0,0,0)'
+                backgroundColor: this.state.appbarColor
             },
-            body: {
+            footer: {
                 position: 'absolute',
-                top: 0
+                bottom: 0
             }
         };
 
         return (
             <div
                 style={styles.root}>
-                <Body
-                    style={styles.body}/>
+                {this.props.children}
+                <Footer
+                    style={styles.footer}/>
                 <AppBar
                     style={styles.appbar}
                     zDepth={0}
@@ -45,18 +69,20 @@ let App = React.createClass({
                     docked={false}
                     open={this.state.open}
                     onRequestChange={open => this.setState({open})}>
-                    <MenuItem>
-                        Start
-                    </MenuItem>
-                    <MenuItem>
-                        Menu Item 1
-                    </MenuItem>
-                    <MenuItem>
-                        Menu Item 2
-                    </MenuItem>
-                    <MenuItem>
-                        Menu Item 3
-                    </MenuItem>
+                    <SelectableList
+                        valueLink={{
+                            value: this.props.location.pathname,
+                            requestChange: this.handleRequestChangeList}}>
+                        <ListItem
+                            primaryText="Home"
+                            value="/"/>
+                        <ListItem
+                            primaryText="Phoniac"
+                            value="/phoniac"/>
+                        <ListItem
+                            primaryText="GitHub"
+                            value="/github"/>
+                    </SelectableList>
                 </LeftNav>
             </div>
         )

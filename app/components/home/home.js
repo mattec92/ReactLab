@@ -3,9 +3,8 @@ import Header from './header.js';
 import Lead from './lead.js';
 import CardContainer from './cardcontainer.js';
 import ContactContainer from './contactcontainer.js';
-import Footer from './footer.js';
 
-let Body = React.createClass({
+let Home = React.createClass({
     render() {
         return (
             <div>
@@ -13,10 +12,9 @@ let Body = React.createClass({
                 <Lead />
                 <CardContainer />
                 <ContactContainer />
-                <Footer />
             </div>
         )
     }
 });
 
-export default Body;
+export default Home;

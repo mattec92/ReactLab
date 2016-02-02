@@ -1,5 +1,5 @@
 import React from 'react';
-import Paper from 'material-ui/lib/paper';
+import Paper from '../../../node_modules/material-ui/lib/paper';
 import Typography from 'material-ui/lib/styles';
 
 let Card = React.createClass({
