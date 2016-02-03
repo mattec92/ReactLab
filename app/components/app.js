@@ -5,18 +5,19 @@ import LeftNav from 'material-ui/lib/left-nav';
 import ListItem from 'material-ui/lib/lists/list-item';
 import List from 'material-ui/lib/lists/list';
 import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
+import ActionHome from 'material-ui/lib/svg-icons/action/home';
+import ImageIcon from './imageicon.js';
 
 const SelectableList = SelectableContainerEnhance(List);
 
 let App = React.createClass({
 
+    isRoot(path) {
+        return path === "/";
+    },
+
     getAppBarColor(path) {
-        if (path === "/") {
-            return 'rgba(0,0,0,0)';
-        }
-        else {
-            return '#00bcd4';
-        }
+        return this.isRoot(path) ? 'rgba(0,0,0,0)' : '#00bcd4';
     },
 
     getInitialState() {
@@ -42,24 +43,26 @@ let App = React.createClass({
         const styles = {
             root: {
                 position: 'relative',
+                minHeight: '100%'
             },
             appbar: {
                 position: 'absolute',
                 top: 0,
-                backgroundColor: this.state.appbarColor
+                backgroundColor: this.state.appbarColor,
+                height: 64
             },
-            footer: {
-                position: 'absolute',
-                bottom: 0
-            }
+            content: {
+            },
+            footer: {}
         };
 
         return (
             <div
                 style={styles.root}>
-                {this.props.children}
-                <Footer
-                    style={styles.footer}/>
+                <div
+                    style={styles.content}>
+                    {this.props.children}
+                </div>
                 <AppBar
                     style={styles.appbar}
                     zDepth={0}
@@ -75,15 +78,19 @@ let App = React.createClass({
                             requestChange: this.handleRequestChangeList}}>
                         <ListItem
                             primaryText="Home"
-                            value="/"/>
+                            value="/"
+                            leftIcon={<ActionHome />}/>
                         <ListItem
                             primaryText="Phoniac"
-                            value="/phoniac"/>
+                            value="/phoniac"
+                            /*leftIcon={<ImageIcon icon="img/phoniac_logo.png"/>}*//> //TODO
                         <ListItem
                             primaryText="GitHub"
                             value="/github"/>
                     </SelectableList>
                 </LeftNav>
+                <Footer
+                    style={styles.footer}/>
             </div>
         )
     }
