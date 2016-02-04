@@ -51,10 +51,13 @@ let App = React.createClass({
                 backgroundColor: this.state.appbarColor,
                 height: 64
             },
-            content: {
-            },
+            content: {},
             footer: {}
         };
+
+        const title =
+            this.props.history.isActive('/phoniac') ? 'Phoniac' :
+                this.props.history.isActive('/github') ? 'GitHub' : '';
 
         return (
             <div
@@ -65,6 +68,7 @@ let App = React.createClass({
                 </div>
                 <AppBar
                     style={styles.appbar}
+                    title={title}
                     zDepth={0}
                     iconClassNameRight="muidocs-icon-navigation-expand-more"
                     onLeftIconButtonTouchTap={this.toggleLeftNav}/>
@@ -83,7 +87,7 @@ let App = React.createClass({
                         <ListItem
                             primaryText="Phoniac"
                             value="/phoniac"
-                            /*leftIcon={<ImageIcon icon="img/phoniac_logo.png"/>}*//> //TODO
+                            /*leftIcon={<ImageIcon icon="img/phoniac_logo.png"/>}*//>
                         <ListItem
                             primaryText="GitHub"
                             value="/github"/>

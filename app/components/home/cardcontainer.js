@@ -18,18 +18,14 @@ let CardContainer = React.createClass({
                     className="col-sm-2"/>
                 <Card
                     imageDescription="Phoniac logo"
-                    imageUrl="img/phoniac_logo.png"
-                    description="Get my Android app - Phoniac - on Google Play."
-                    linkId="phoniacLink"
-                    linkText="Phoniac on Google Play"
-                    linkUrl="https://play.google.com/store/apps/details?id=se.mattec.phoniac"/>
+                    imageUrl="img/phoniac500x500.jpg"
+                    title="Phoniac"
+                    path="/phoniac"/>
                 <Card
                     imageDescription="GitHub logo"
-                    imageUrl="img/github_logo.png"
-                    description="View my GitHub profile and the source code of this site."
-                    linkId="githubLink"
-                    linkText="Mattias Cederlund on GitHub"
-                    linkUrl="https://github.com/mattec92"/>
+                    imageUrl="img/octocat500x500.jpg"
+                    title="GitHub"
+                    path="/github"/>
 
                 <div
                     className="col-sm-2"/>

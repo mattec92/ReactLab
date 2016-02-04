@@ -6,12 +6,10 @@ let Github = React.createClass({
         return (
             <Feature
                 title="Github"
-                image=""
-                logo="img/github_logo.png"
-                promoText="View my GitHub profile and the source code of this site."
+                image="img/github_promo.jpg"
+                promoText="Some of my personal projects, including this site, and course work from KTH is available at my GitHub."
                 linkText="Mattias Cederlund on GitHub"
-                linkUrl="https://github.com/mattec92"
-                />
+                linkUrl="https://github.com/mattec92"/>
         )
     }
 });

@@ -2,60 +2,53 @@ import React from 'react';
 import RaisedButton from '../../../node_modules/material-ui/lib/raised-button';
 
 let Feature = React.createClass({
-    render() {
-        const styles = {
-            root: {
-                paddingTop: 64
-            },
-            image: {
+        render() {
+            const styles = {
+                root: {
+                    paddingTop: 64 + 50,
+                    paddingBottom: 50,
+                    paddingLeft: 50,
+                    paddingRight: 50,
+                    maxWidth: 1124,
+                    marginRight: 'auto',
+                    marginLeft: 'auto',
+                    textAlign: 'center'
+                },
+                image: {
+                    width: 'auto',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    maxHeight: 500
+                },
+                text: {
+                    textAlign: 'center',
+                    fontSize: 20,
+                    marginTop: 20,
+                    marginBottom: 20
+                },
+                button: {}
+            };
 
-            },
-            descriptionContainer: {
-
-            },
-            logo: {
-
-            },
-            text: {
-
-            },
-            button: {
-
-            }
-        };
-
-        return (
-            <div
-                style={styles.root}>
-                <h1>
-                    {this.props.title}
-                </h1>
-                <img
-                    styles={styles.image}
-                    src={this.props.image}/>
-
+            return (
                 <div
-                    styles={styles.descriptionContainer}>
+                    style={styles.root}>
                     <img
-                        styles={styles.logo}
-                        src={this.props.logo}/>
-
-                    <div>
-                        <p
-                            style={styles.text}>
-                            {this.props.promoText}
-                        </p>
-                        <RaisedButton
-                            style={styles.button}
-                            label={this.props.linkText}
-                            linkButton={true}
-                            secondary={true}
-                            href={this.props.linkUrl}/>
-                    </div>
+                        style={styles.image}
+                        src={this.props.image}/>
+                    <p
+                        style={styles.text}>
+                        {this.props.promoText}
+                    </p>
+                    <RaisedButton
+                        style={styles.button}
+                        label={this.props.linkText}
+                        linkButton={true}
+                        secondary={true}
+                        href={this.props.linkUrl}/>
                 </div>
-            </div>
-        )
-    }
-});
+            )
+        }
+    })
+    ;
 
 export default Feature;

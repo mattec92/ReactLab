@@ -1,6 +1,7 @@
 import React from 'react';
-import Paper from '../../../node_modules/material-ui/lib/paper';
+import Paper from 'material-ui/lib/paper';
 import Typography from 'material-ui/lib/styles';
+import {Link} from 'react-router';
 
 let Card = React.createClass({
     getInitialState() {
@@ -24,19 +25,23 @@ let Card = React.createClass({
     render() {
         const styles = {
             root: {
-                padding: '50px',
-                marginBottom: '50px',
-                textAlign: 'center'
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                marginBottom: 50,
+                textAlign: 'center',
+                maxWidth: 500,
+                backgroundColor: '#EEEEEE'
             },
-            logo: {
-                width: '60px',
-                height: '60px'
+            title: {
+                padding: 20,
+                margin: 0
             },
-            description: {
-                marginTop: '20px'
-            },
-            link: {
-                marginTop: '20px'
+            image: {
+                width: 'auto',
+                height: 'auto',
+                maxWidth: '100%',
+                maxHeight: 500,
+                margin: 0
             }
         };
 
@@ -48,22 +53,17 @@ let Card = React.createClass({
                     zDepth={this.state.zDepth}
                     onMouseEnter={this._onMouseEnter}
                     onMouseLeave={this._onMouseLeave}>
-                    <img
-                        style={styles.logo}
-                        alt={this.props.imageDescription}
-                        src={this.props.imageUrl}/>
-
-                    <p
-                        style={styles.description}>
-                        {this.props.description}
-                    </p>
-                    <a
-                        style={styles.link}
-                        id={this.props.linkId}
-                        href={this.props.linkUrl}
-                        target="_blank">
-                        {this.props.linkText}
-                    </a>
+                    <Link
+                        to={this.props.path}>
+                        <h2
+                            style={styles.title}>
+                            {this.props.title}
+                        </h2>
+                        <img
+                            style={styles.image}
+                            alt={this.props.imageDescription}
+                            src={this.props.imageUrl}/>
+                    </Link>
                 </Paper>
             </div>
         );

@@ -6,11 +6,10 @@ let Phoniac = React.createClass({
         return (
             <Feature
                 title="Phoniac"
-                image=""
-                logo="img/phoniac_logo.png"
-                promoText="Get my Android app - Phoniac - on Google Play."
+                image="img/phoniac_promo.jpg"
+                promoText="Phoniac is an Android application for monitoring your phone usage and showing statistics of when and how much you actually use your phone. It is probably more than you think!"
                 linkText="Phoniac on Google Play"
-                linkUrl="https://play.google.com/store/apps/details?id=se.mattec.phoniac" />
+                linkUrl="https://play.google.com/store/apps/details?id=se.mattec.phoniac"/>
         )
     }
 });
