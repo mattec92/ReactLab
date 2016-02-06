@@ -13,7 +13,7 @@ const SelectableList = SelectableContainerEnhance(List);
 let App = React.createClass({
 
     componentDidMount() {
-        this.updateAppBar();
+        this.updateAppBar(this.props);
     },
 
     componentWillReceiveProps(nextProps) {
