@@ -12,6 +12,20 @@ const SelectableList = SelectableContainerEnhance(List);
 
 let App = React.createClass({
 
+    componentDidMount() {
+        this.updateAppBar();
+    },
+
+    componentWillReceiveProps(nextProps) {
+        this.updateAppBar(nextProps);
+    },
+
+    updateAppBar(props) {
+        this.setState({
+            appbarColor: this.getAppBarColor(props.location.pathname)
+        });
+    },
+
     isRoot(path) {
         return path === "/";
     },
@@ -35,7 +49,6 @@ let App = React.createClass({
         this.props.history.push(value);
         this.setState({
             open: false,
-            appbarColor: this.getAppBarColor(value)
         });
     },
 
