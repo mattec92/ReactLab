@@ -15,12 +15,12 @@ app.post('/api/contact', function (req, res) {
     const email = req.body.email;
     const subject = req.body.subject;
     const message = req.body.message;
-    const evaluatePt1 = req.body.evaluatePt1;
-    const evaluatePt2 = req.body.evaluatePt2;
-    const evaluateResult = req.body.evaluateResult;
+    const validationPt1 = parseInt(req.body.validationPt1);
+    const validationPt2 = parseInt(req.body.validationPt2);
+    const validationResult = parseInt(req.body.validationResult);
 
-    if (evaluatePt1 + evaluatePt2 !== evaluateResult) {
-        res.status(400).json({error: 'Evaluation failed'});
+    if (validationPt1 + validationPt1 !== validationResult) {
+        res.status(400).json({error: 'Validation failed'});
         return;
     }
 
@@ -39,10 +39,11 @@ app.post('/api/contact', function (req, res) {
         return;
     }
 
-    //TODO: Do email validation
-    //if (!emailValid) {
-    //
-    //}
+    const emailRegex = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+    if (!emailRegex.test(email)) {
+        res.status(400).json({error: 'Email not valid'});
+        return;
+    }
 
     res.json({result: 'Email was sent'});
 });

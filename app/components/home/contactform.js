@@ -11,9 +11,9 @@ let ContactForm = React.createClass({
             email: '',
             subject: '',
             message: '',
-            evaluatePt1: Math.floor((Math.random() * 10) + 1),
-            evaluatePt2: Math.floor((Math.random() * 10) + 1),
-            evaluateResult: '',
+            validationPt1: Math.floor((Math.random() * 10) + 1),
+            validationPt2: Math.floor((Math.random() * 10) + 1),
+            validationResult: '',
             snackbarOpen: false,
             snackbarMessage: '',
             popoverOpen: false
@@ -21,20 +21,26 @@ let ContactForm = React.createClass({
     },
 
     handleEmailChange(e) {
-        this.setState({email: e.target.value})
+        this.setState({
+            email: e.target.value
+        })
     },
 
     handleSubjectChange(e) {
-        this.setState({subject: e.target.value})
+        this.setState({
+            subject: e.target.value
+        })
     },
 
     handleMessageChange(e) {
-        this.setState({message: e.target.value})
+        this.setState({
+            message: e.target.value
+        })
     },
 
-    handleEvaluationChange(e) {
+    handleValidationChange(e) {
         this.setState({
-            evaluateResult: e.target.value
+            validationResult: e.target.value
         });
     },
 
@@ -43,9 +49,9 @@ let ContactForm = React.createClass({
             email: this.state.email,
             subject: this.state.subject,
             message: this.state.message,
-            evaluatePt1: this.state.evaluatePt1,
-            evaluatePt2: this.state.evaluatePt2,
-            evaluateResult: this.state.evaluateResult
+            validationPt1: this.state.validationPt1,
+            validationPt2: this.state.validationPt2,
+            validationResult: this.state.validationResult
         };
 
         $.ajax({
@@ -54,12 +60,12 @@ let ContactForm = React.createClass({
             type: 'POST',
             data: postData,
             success: function (data) {
-                this.openSnackbar('Success: ' + data.result);
+                this.openSnackbar(data.result);
                 this.resetContactForm();
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('/api/contact', status, err.toString());
-                this.openSnackbar('Error: ' + err.error);
+                this.openSnackbar('Failed to send email, try again later or use another contact option.');
             }.bind(this)
         });
     },
@@ -98,51 +104,57 @@ let ContactForm = React.createClass({
         });
     },
 
-    generateNewEvaluation() {
+    generateNewValidation() {
         this.setState({
-            evaluatePt1: Math.floor((Math.random() * 10) + 1),
-            evaluatePt2: Math.floor((Math.random() * 10) + 1),
-            evaluateResult: ''
+            validationPt1: Math.floor((Math.random() * 10) + 1),
+            validationPt2: Math.floor((Math.random() * 10) + 1),
+            validationResult: ''
         });
     },
 
-    doLocalEvaluation() {
-        if (!this.state.evaluateResult) {
+    doLocalValidation() {
+        if (!this.state.validationResult) {
             this.openSnackbar("You must answer the question to continue.");
         }
-        else if ((this.state.evaluatePt1 + this.state.evaluatePt2) == parseInt(this.state.evaluateResult)) {
+        else if ((this.state.validationPt1 + this.state.validationPt2) == parseInt(this.state.validationResult)) {
             this.closePopover();
             this.sendEmail();
-            this.generateNewEvaluation();
+            this.generateNewValidation();
         }
         else {
-            this.openSnackbar("Evaluation failed, " + this.state.evaluatePt1 + " + " + this.state.evaluatePt2 + " is not '" + this.state.evaluateResult + "'.");
-            this.generateNewEvaluation();
+            this.openSnackbar("Wrong answer, " + this.state.validationPt1 + " + " + this.state.validationPt2 + " is not '" + this.state.validationResult + "'.");
+            this.generateNewValidation();
         }
     },
 
-    doMessageEvaluation(e) {
+    doMessageValidation(e) {
         if (!this.state.email) {
             this.openSnackbar("Email must be supplied.");
+            return;
         }
-        else if (!this.state.subject) {
+
+        if (!this.state.subject) {
             this.openSnackbar("Subject must be supplied.");
+            return;
         }
-        else if (!this.state.message) {
+        if (!this.state.message) {
             this.openSnackbar("Message must be supplied.");
+            return;
         }
-        //else if (!emailValid) { //TODO: Email evaluation
-        //    this.openSnackbar("Email must be valid.");
-        //}
-        else {
-            this.openPopover(e);
+
+        const emailRegex = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+        if (!emailRegex.test(this.state.email)) {
+            this.openSnackbar("Email must be valid.");
+            return;
         }
+
+        this.openPopover(e);
     },
 
     render() {
         const styles = {
             root: {
-                padding: '50px',
+                padding: 50,
                 textAlign: 'center'
             },
             header: {
@@ -150,15 +162,18 @@ let ContactForm = React.createClass({
                 fontFamily: 'Roboto'
             },
             textField: {
-                maxWidth: '600px'
+                maxWidth: 600
             },
             button: {
-                marginTop: '30px',
-                marginBottom: '30px'
+                marginTop: 30,
+                marginBottom: 30
             },
             popover: {
                 textAlign: 'center',
                 padding: 20
+            },
+            popoverButton: {
+                marginTop: 10
             }
         };
 
@@ -174,25 +189,28 @@ let ContactForm = React.createClass({
                     style={styles.textField}
                     hintText="name@example.com"
                     floatingLabelText="Email Address"
+                    value={this.state.email}
                     onChange={this.handleEmailChange}/>
                 <br/>
                 <TextField
                     style={styles.textField}
                     hintText="Urgent message"
                     floatingLabelText="Subject"
+                    value={this.state.subject}
                     onChange={this.handleSubjectChange}/>
                 <br/>
                 <TextField
                     style={styles.textField}
                     hintText="Dear Mattias, ..."
                     floatingLabelText="Message"
+                    value={this.state.message}
                     onChange={this.handleMessageChange}/>
                 <br/>
                 <RaisedButton
                     style={styles.button}
                     label="Send"
                     secondary={true}
-                    onClick={this.doMessageEvaluation}/>
+                    onClick={this.doMessageValidation}/>
                 <Popover
                     open={this.state.popoverOpen}
                     anchorEl={this.state.anchorEl}
@@ -202,24 +220,24 @@ let ContactForm = React.createClass({
                     <div
                         style={styles.popover}>
                         <p>
-                            What is {this.state.evaluatePt1} + {this.state.evaluatePt2}?
+                            What is {this.state.validationPt1} + {this.state.validationPt2}?
                         </p>
                         <TextField
-                            style={styles.textField}
-                            onChange={this.handleEvaluationChange}
-                            value={this.state.evaluateResult}
-                            onEnterKeyDown={this.doLocalEvaluation}/>
+                            value={this.state.validationResult}
+                            onChange={this.handleValidationChange}
+                            onEnterKeyDown={this.doLocalValidation}/>
                         <br/>
                         <RaisedButton
+                            style={styles.popoverButton}
                             secondary={true}
-                            label="Submit"
-                            onClick={this.doLocalEvaluation}/>
+                            label="Confirm send"
+                            onClick={this.doLocalValidation}/>
                     </div>
                 </Popover>
                 <Snackbar
                     open={this.state.snackbarOpen}
                     message={this.state.snackbarMessage}
-                    autoHideDuration={4000}
+                    autoHideDuration={3000}
                     onRequestClose={this.closeSnackbar}/>
             </div>
         );
