@@ -19,7 +19,7 @@ app.post('/api/contact', function (req, res) {
     const validationPt2 = parseInt(req.body.validationPt2);
     const validationResult = parseInt(req.body.validationResult);
 
-    if (validationPt1 + validationPt1 !== validationResult) {
+    if (validationPt1 + validationPt2 !== validationResult) {
         res.status(400).json({error: 'Validation failed'});
         return;
     }
