@@ -1,7 +1,10 @@
+const debug = process.env.NODE_ENV !== "production";
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute, Redirect} from 'react-router'
 import createHashHistory from 'history/lib/createHashHistory';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import ga from 'react-ga';
 import App from './components/app.js';
@@ -11,10 +14,17 @@ import Github from './components/feature/github.js';
 
 injectTapEventPlugin();
 
-var options = { debug: true };
+const options = {debug: debug};
 ga.initialize('UA-49525518-5', options);
 
-let history = createHashHistory({queryKey: false});
+let history;
+
+if (debug) {
+    history = createHashHistory({queryKey: false});
+}
+else {
+    history = createBrowserHistory();
+}
 
 history.listen(location => {
     ga.pageview(location.pathname);
