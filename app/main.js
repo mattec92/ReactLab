@@ -1,5 +1,3 @@
-const debug = process.env.NODE_ENV !== "production";
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute, Redirect} from 'react-router'
@@ -14,12 +12,12 @@ import Github from './components/feature/github.js';
 
 injectTapEventPlugin();
 
-const options = {debug: debug};
+const options = {debug: DEBUG};
 ga.initialize('UA-49525518-5', options);
 
 let history;
 
-if (debug) {
+if (DEBUG) {
     history = createHashHistory({queryKey: false});
 }
 else {
