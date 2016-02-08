@@ -18,12 +18,12 @@ let CardContainer = React.createClass({
                     className="col-sm-2"/>
                 <Card
                     imageDescription="Phoniac"
-                    imageUrl="img/phoniac_card.jpg"
+                    imageUrl="../img/phoniac_card.jpg"
                     title="Phoniac"
                     path="/phoniac"/>
                 <Card
                     imageDescription="GitHub"
-                    imageUrl="img/github_card.jpg"
+                    imageUrl="../img/github_card.jpg"
                     title="GitHub"
                     path="/github"/>
 

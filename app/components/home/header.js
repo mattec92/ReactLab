@@ -29,7 +29,7 @@ let Header = React.createClass({
                 position: 'relative'
             },
             background: {
-                backgroundImage: 'url("img/stockholm.jpg")',
+                backgroundImage: 'url("../img/stockholm.jpg")',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center center',
                 textAlign: 'center',
@@ -71,7 +71,7 @@ let Header = React.createClass({
                     style={styles.background}>
                     <img
                         style={styles.image}
-                        src="img/m_logo.png"/>
+                        src="../img/m_logo.png"/>
 
                     <h1
                         style={styles.text}>

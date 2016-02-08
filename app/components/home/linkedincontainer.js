@@ -49,7 +49,7 @@ let LinkedInContainer = React.createClass({
                     style={styles.imageContainer}>
                     <img
                         style={styles.image}
-                        src="img/portrait.jpg"
+                        src="../img/portrait.jpg"
                         alt="Mattias Cederlund portrait"/>
                 </div>
                 <p

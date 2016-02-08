@@ -58,7 +58,7 @@ let Footer = React.createClass({
                     onMouseLeave={this._onMouseLeave}>
                     <img
                         style={styles.image}
-                        src="img/github_logo_light_64.png"
+                        src="../img/github_logo_light_64.png"
                         alt="Github logo"/>
                 </a>
             </footer>
