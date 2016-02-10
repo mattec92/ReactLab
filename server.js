@@ -49,17 +49,26 @@ app.post('/api/contact', function (req, res) {
     MongoDB(
         'contact',
         'message',
-        function (collection, callback) {
+        function (collection, closeDBConnection) {
             collection.insertOne({
                     "email": email,
                     "subject": subject,
                     "message": message
                 },
-                callback);
+                function (error, result) {
+                    if (error) {
+                        res.status(400).json({error: 'Could not send message: Insert failed.'});
+                    }
+                    else {
+                        res.json({result: 'Message was sent.'});
+                    }
+                    closeDBConnection();
+                });
+        },
+        function () {
+            res.status(400).json({error: 'Could not send message: DB connection failed.'});
         }
     );
-
-    res.json({result: 'Email was sent'});
 });
 
 app.listen(app.get('port'), function () {

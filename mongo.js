@@ -2,14 +2,13 @@ const MongoClient = require('mongodb').MongoClient, format = require('util').for
 const MongoBaseUrl = 'mongodb://127.0.0.1:27017/';
 
 module.exports = {
-    MongoDB: function (databaseName, collectionName, callback) {
+    MongoDB: function (databaseName, collectionName, onSuccess, onFailure) {
         MongoClient.connect(MongoBaseUrl + databaseName, function (error, db) {
             if (error) {
-                throw error;
+                onFailure();
             } else {
-                console.log("Successfully connected to the database");
                 const collection = db.collection(collectionName);
-                callback(
+                onSuccess(
                     collection,
                     function () {
                         db.close();
