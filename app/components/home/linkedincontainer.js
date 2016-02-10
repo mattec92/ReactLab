@@ -28,7 +28,8 @@ let LinkedInContainer = React.createClass({
                 height: '150px'
             },
             text: {
-                marginTop: '20px'
+                marginTop: '20px',
+                fontSize: 16
             },
             button: {
                 marginTop: '30px',

@@ -12,7 +12,10 @@ let Lead = React.createClass({
             text: {
                 textAlign: 'center',
                 fontWeight: Typography.fontWeightLight,
-                fontFamily: 'Roboto'
+                fontFamily: 'Roboto',
+                maxWidth: 800,
+                marginLeft: 'auto',
+                marginRight: 'auto'
             }
         };
 
@@ -21,7 +24,8 @@ let Lead = React.createClass({
                 style={styles.container}>
                 <h3
                     style={styles.text}>
-                    This is the lead text. Insert something appropriate here!
+                    Welcome to my React playground. This is where I try new, cool technologies and showcase what I have
+                    done so far.
                 </h3>
             </div>
         );
