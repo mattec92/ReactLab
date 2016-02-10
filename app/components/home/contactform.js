@@ -65,7 +65,7 @@ let ContactForm = React.createClass({
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('/api/contact', status, err.toString());
-                this.openSnackbar('Failed to send email, try again later or use another contact option.');
+                this.openSnackbar('Failed to send message, try again later or use another contact option.');
             }.bind(this)
         });
     },
@@ -129,7 +129,7 @@ let ContactForm = React.createClass({
 
     doMessageValidation(e) {
         if (!this.state.email) {
-            this.openSnackbar("Email must be supplied.");
+            this.openSnackbar("Email address must be supplied.");
             return;
         }
 
@@ -183,7 +183,7 @@ let ContactForm = React.createClass({
                 className="col-sm-6">
                 <h3
                     style={styles.header}>
-                    Want to get in touch? Send me an email ...
+                    Want to get in touch? Send me a message ...
                 </h3>
                 <TextField
                     style={styles.textField}

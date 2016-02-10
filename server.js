@@ -2,6 +2,7 @@ var path = require('path');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var MongoDB = require('./mongo.js').MongoDB;
 
 app.set('port', (process.env.PORT || 8080));
 app.use(bodyParser.json());
@@ -44,6 +45,19 @@ app.post('/api/contact', function (req, res) {
         res.status(400).json({error: 'Email not valid'});
         return;
     }
+
+    MongoDB(
+        'contact',
+        'message',
+        function (collection, callback) {
+            collection.insertOne({
+                    "email": email,
+                    "subject": subject,
+                    "message": message
+                },
+                callback);
+        }
+    );
 
     res.json({result: 'Email was sent'});
 });
