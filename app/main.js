@@ -9,6 +9,8 @@ import App from './components/app.js';
 import Home from './components/home/home.js';
 import Phoniac from './components/feature/phoniac.js';
 import Github from './components/feature/github.js';
+import Blog from './components/blog/blog.js';
+import BlogEntryStandalone from './components/blog/entry/blogentrystandalone.js';
 
 injectTapEventPlugin();
 
@@ -36,6 +38,8 @@ const routes = (
             <Route path="home" component={Home}/>
             <Route path="phoniac" component={Phoniac}/>
             <Route path="github" component={Github}/>
+            <Route path="blog" component={Blog}/>
+            <Route path="blog/:id" component={BlogEntryStandalone}/>
         </Route>
     </Router>
 );

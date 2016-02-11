@@ -3,10 +3,12 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var MongoDB = require('./mongo.js').MongoDB;
+var cors = require('cors');
 
 app.set('port', (process.env.PORT || 8080));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 
 app.get('/api/hello', function (req, res) {
     res.send('Hello World!');
@@ -67,6 +69,58 @@ app.post('/api/contact', function (req, res) {
         },
         function () {
             res.status(400).json({error: 'Could not send message: DB connection failed.'});
+        }
+    );
+});
+
+app.get('/api/blog', function (req, res) {
+    MongoDB(
+        'blog',
+        'entry',
+        function (collection, closeDBConnection) {
+            var cursor = collection.find();
+            var entries = [];
+            cursor.each(
+                function (error, result) {
+                    if (error) {
+                        res.status(404).json({error: 'Could not find any entries'});
+                    }
+                    else if (!result) {
+                        res.json(entries);
+                        closeDBConnection();
+                    }
+                    else {
+                        entries.push(result);
+                    }
+                }
+            );
+        },
+        function () {
+            res.status(400).json({error: 'Could not get entry: DB connection failed.'});
+        }
+    );
+});
+
+app.get('/api/blog/:id', function (req, res) {
+    MongoDB(
+        'blog',
+        'entry',
+        function (collection, closeDBConnection) {
+            collection.findOne(
+                {"id": req.params.id},
+                function (error, result) {
+                    if (error || !result) {
+                        res.status(404).json({error: 'Could not find an entry with id ' + req.params.id});
+                    }
+                    else {
+                        res.json(result);
+                    }
+                    closeDBConnection();
+                }
+            );
+        },
+        function () {
+            res.status(400).json({error: 'Could not get entry: DB connection failed.'});
         }
     );
 });
