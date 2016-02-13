@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './card.js';
+import {Row, Col} from 'react-bootstrap';
 
 let CardContainer = React.createClass({
     render() {
@@ -11,25 +12,29 @@ let CardContainer = React.createClass({
         };
 
         return (
-            <div
-                style={styles.root}
-                className="row">
-                <div
-                    className="col-sm-2"/>
-                <Card
-                    imageDescription="Phoniac"
-                    imageUrl="../img/phoniac_card.jpg"
-                    title="Phoniac"
-                    path="/phoniac"/>
-                <Card
-                    imageDescription="GitHub"
-                    imageUrl="../img/github_card.jpg"
-                    title="GitHub"
-                    path="/github"/>
-
-                <div
-                    className="col-sm-2"/>
-            </div>
+                <Row
+                    style={styles.root}>
+                    <Col
+                        sm={2}/>
+                    <Col
+                        sm={4}>
+                        <Card
+                            imageDescription="Phoniac"
+                            imageUrl="../img/phoniac_card.jpg"
+                            title="Phoniac"
+                            path="/phoniac"/>
+                    </Col>
+                    <Col
+                        sm={4}>
+                        <Card
+                            imageDescription="GitHub"
+                            imageUrl="../img/github_card.jpg"
+                            title="GitHub"
+                            path="/github"/>
+                    </Col>
+                    <Col
+                        sm={2}/>
+                </Row>
         );
     }
 });

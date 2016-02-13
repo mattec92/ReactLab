@@ -1,6 +1,7 @@
 import React from 'react';
 import LinkedInContainer from './linkedincontainer.js'
 import ContactForm from './contactform.js'
+import {Row, Col} from 'react-bootstrap';
 
 let ContactContainer = React.createClass({
     render() {
@@ -14,12 +15,17 @@ let ContactContainer = React.createClass({
         };
 
         return (
-            <div
-                style={styles.root}
-                className="row">
-                <ContactForm/>
-                <LinkedInContainer/>
-            </div>
+                <Row
+                    style={styles.root}>
+                    <Col
+                        sm={6}>
+                        <ContactForm/>
+                    </Col>
+                    <Col
+                        sm={6}>
+                        <LinkedInContainer/>
+                    </Col>
+                </Row>
         );
     }
 });

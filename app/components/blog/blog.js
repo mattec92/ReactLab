@@ -2,7 +2,7 @@ import React from 'react';
 import BlogHeader from './blogheader.js';
 import BlogEntryList from './blogentrylist.js';
 import BlogSide from './blogside.js';
-import {Grid, Row, Col} from 'react-bootstrap';
+import {Row, Col} from 'react-bootstrap';
 
 let Blog = React.createClass({
     getInitialState() {
@@ -16,8 +16,10 @@ let Blog = React.createClass({
     },
 
     loadBlogPosts() {
+        const blogUrl = DEBUG ? 'http://localhost:8080/api/blog' : '/api/blog';
+
         $.ajax({
-            url: 'http://localhost:8080/api/blog',//'/api/blog',
+            url: blogUrl,
             dataType: 'json',
             type: 'GET',
             success: function (data) {
@@ -26,7 +28,7 @@ let Blog = React.createClass({
                 });
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error('/api/blog', status, err.toString());
+                console.error(blogUrl, status, err.toString());
             }.bind(this)
         });
     },
@@ -52,7 +54,6 @@ let Blog = React.createClass({
                 style={styles.container}>
                 <BlogHeader
                     style={styles.header}/>
-                <Grid>
                     <Row
                         style={styles.entryContainer}>
                         <Col
@@ -67,7 +68,6 @@ let Blog = React.createClass({
                                 style={styles.side}/>
                         </Col>
                     </Row>
-                </Grid>
             </div>
         );
     }

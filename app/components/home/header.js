@@ -64,7 +64,6 @@ let Header = React.createClass({
         return (
             <div
                 style={styles.root}
-                className="page-header"
                 onMouseEnter={this.setAttributionVisible}
                 onMouseLeave={this.setAttributionGone}>
                 <div

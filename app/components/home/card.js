@@ -46,26 +46,23 @@ let Card = React.createClass({
         };
 
         return (
-            <div
-                className="col-sm-4">
-                <Paper
-                    style={styles.root}
-                    zDepth={this.state.zDepth}
-                    onMouseEnter={this._onMouseEnter}
-                    onMouseLeave={this._onMouseLeave}>
-                    <Link
-                        to={this.props.path}>
-                        <h2
-                            style={styles.title}>
-                            {this.props.title}
-                        </h2>
-                        <img
-                            style={styles.image}
-                            alt={this.props.imageDescription}
-                            src={this.props.imageUrl}/>
-                    </Link>
-                </Paper>
-            </div>
+            <Paper
+                style={styles.root}
+                zDepth={this.state.zDepth}
+                onMouseEnter={this._onMouseEnter}
+                onMouseLeave={this._onMouseLeave}>
+                <Link
+                    to={this.props.path}>
+                    <h2
+                        style={styles.title}>
+                        {this.props.title}
+                    </h2>
+                    <img
+                        style={styles.image}
+                        alt={this.props.imageDescription}
+                        src={this.props.imageUrl}/>
+                </Link>
+            </Paper>
         );
     }
 });

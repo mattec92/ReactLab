@@ -39,8 +39,7 @@ let LinkedInContainer = React.createClass({
 
         return (
             <div
-                style={styles.root}
-                className="col-sm-6">
+                style={styles.root}>
                 <h3
                     style={styles.header}>
                     ... or contact me on LinkedIn.

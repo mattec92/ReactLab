@@ -53,6 +53,7 @@ app.post('/api/contact', function (req, res) {
         'message',
         function (collection, closeDBConnection) {
             collection.insertOne({
+                    "date": new Date(),
                     "email": email,
                     "subject": subject,
                     "message": message

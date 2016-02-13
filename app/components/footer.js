@@ -44,9 +44,8 @@ let Footer = React.createClass({
         const currentYear = new Date().getFullYear();
 
         return (
-            <footer
-                style={styles.root}
-                className="footer">
+            <div
+                style={styles.root}>
                 <p
                     style={styles.text}>
                     Mattias Cederlund, {currentYear}
@@ -61,7 +60,7 @@ let Footer = React.createClass({
                         src="../img/github_logo_light_64.png"
                         alt="Github logo"/>
                 </a>
-            </footer>
+            </div>
         );
     }
 });

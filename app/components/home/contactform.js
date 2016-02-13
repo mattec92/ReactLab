@@ -54,8 +54,10 @@ let ContactForm = React.createClass({
             validationResult: this.state.validationResult
         };
 
+        const contactUrl =  DEBUG ? 'http://localhost:8080/api/contact' : '/api/contact';
+
         $.ajax({
-            url: '/api/contact',
+            url: contactUrl,
             dataType: 'json',
             type: 'POST',
             data: postData,
@@ -64,7 +66,7 @@ let ContactForm = React.createClass({
                 this.resetContactForm();
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error('/api/contact', status, err.toString());
+                console.error(contactUrl, status, err.toString());
                 this.openSnackbar('Failed to send message, try again later or use another contact option.');
             }.bind(this)
         });
@@ -179,8 +181,7 @@ let ContactForm = React.createClass({
 
         return (
             <div
-                style={styles.root}
-                className="col-sm-6">
+                style={styles.root}>
                 <h3
                     style={styles.header}>
                     Want to get in touch? Send me a message ...

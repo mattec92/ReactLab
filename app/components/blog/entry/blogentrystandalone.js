@@ -13,8 +13,10 @@ let BlogEntryStandalone = React.createClass({
     },
 
     loadBlogPost() {
+        const blogUrl = (DEBUG ? 'http://localhost:8080/api/blog/' : '/api/blog/') + this.props.params.id;
+
         $.ajax({
-            url: 'http://localhost:8080/api/blog/' + this.props.params.id,//'/api/blog/' + this.props.params.id
+            url: blogUrl,
             dataType: 'json',
             type: 'GET',
             success: function (data) {
@@ -23,7 +25,7 @@ let BlogEntryStandalone = React.createClass({
                 });
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error('/api/blog/' + this.props.params.id, status, err.toString());
+                console.error(blogUrl, status, err.toString());
             }.bind(this)
         });
     },
