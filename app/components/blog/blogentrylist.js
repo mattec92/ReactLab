@@ -1,5 +1,5 @@
 import React from 'react';
-import BlogEntry from './entry/blogEntry.js';
+import BlogEntry from './entry/blogentry.js';
 
 let BlogEntryList = React.createClass({
     render() {
