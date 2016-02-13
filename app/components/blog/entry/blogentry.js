@@ -1,22 +1,45 @@
 import React from 'react';
 import BlogEntryHeader from './blogentryheader.js';
 import BlogEntryFooter from './blogentryfooter.js';
+import Paper from 'material-ui/lib/paper';
+import {Link} from 'react-router';
 
 let BlogEntry = React.createClass({
-    render() {
-        const styles = {
-            container: {}
-        };
-
-        return (
-            <div
-                style={styles.container}>
-                This is the blog entry with id {this.props.id}.
-                <BlogEntryHeader />
-
+    buildTitle() {
+        if (this.props.isStandalone) {
+            return (
                 <h1>
                     {this.props.entry.title}
                 </h1>
+            );
+        }
+        else {
+            return (
+                <Link
+                    to={'blog/' + this.props.entry.id}>
+                    <h1>
+                        {this.props.entry.title}
+                    </h1>
+                </Link>
+            );
+        }
+    },
+
+    render() {
+        const styles = {
+            root: {
+                margin: 20,
+                padding: 20
+            }
+        };
+
+        return (
+            <Paper
+                style={styles.root}
+                zDepth={2}>
+                <BlogEntryHeader />
+
+                {this.buildTitle()}
 
                 <h3>
                     {this.props.entry.date}
@@ -30,7 +53,7 @@ let BlogEntry = React.createClass({
                     {this.props.entry.author}
                 </h3>
                 <BlogEntryFooter />
-            </div>
+            </Paper>
         );
     }
 });

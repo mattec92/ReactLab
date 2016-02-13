@@ -1,5 +1,4 @@
 import React from 'react';
-import BlogHeader from './blogheader.js';
 import BlogEntryList from './blogentrylist.js';
 import BlogSide from './blogside.js';
 import {Row, Col} from 'react-bootstrap';
@@ -43,7 +42,9 @@ let Blog = React.createClass({
                 padding: 50
             },
             entryContainer: {
-                width: '100%'
+                width: '100%',
+                margin: 0,
+                padding: 0
             },
             list: {},
             side: {}
@@ -52,22 +53,24 @@ let Blog = React.createClass({
         return (
             <div
                 style={styles.container}>
-                <BlogHeader
-                    style={styles.header}/>
-                    <Row
-                        style={styles.entryContainer}>
-                        <Col
-                            sm={9}>
-                            <BlogEntryList
-                                entries={this.state.entries}
-                                style={styles.list}/>
-                        </Col>
-                        <Col
-                            sm={3}>
-                            <BlogSide
-                                style={styles.side}/>
-                        </Col>
-                    </Row>
+                <Row
+                    style={styles.entryContainer}>
+                    <Col
+                        sm={1} />
+                    <Col
+                        sm={7}>
+                        <BlogEntryList
+                            entries={this.state.entries}
+                            style={styles.list}/>
+                    </Col>
+                    <Col
+                        sm={3}>
+                        <BlogSide
+                            style={styles.side}/>
+                    </Col>
+                    <Col
+                        sm={1} />
+                </Row>
             </div>
         );
     }

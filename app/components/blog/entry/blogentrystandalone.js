@@ -42,7 +42,8 @@ let BlogEntryStandalone = React.createClass({
                 style={styles.container}>
                 <BlogEntry
                     id={this.props.params.id}
-                    entry={this.state.entry}/>
+                    entry={this.state.entry}
+                    isStandalone={true}/>
             </div>
         );
     }

@@ -42,13 +42,15 @@ let App = React.createClass({
     },
 
     toggleLeftNav() {
-        this.setState({open: !this.state.open});
+        this.setState({
+            open: !this.state.open
+        });
     },
 
     handleRequestChangeList(event, value) {
         this.props.history.push(value);
         this.setState({
-            open: false,
+            open: false
         });
     },
 
@@ -70,7 +72,10 @@ let App = React.createClass({
 
         const title =
             this.props.history.isActive('/phoniac') ? 'Phoniac' :
-                this.props.history.isActive('/github') ? 'GitHub' : '';
+                this.props.history.isActive('/github') ? 'GitHub' :
+                    this.props.history.isActive('/blog') ? 'Blog' : '';
+
+        console.log('Children: ' + this.props.children);
 
         return (
             <div
@@ -104,6 +109,9 @@ let App = React.createClass({
                         <ListItem
                             primaryText="GitHub"
                             value="/github"/>
+                        <ListItem
+                            primaryText="Blog"
+                            value="/blog"/>
                     </SelectableList>
                 </LeftNav>
                 <Footer
