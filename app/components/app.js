@@ -7,6 +7,7 @@ import List from 'material-ui/lib/lists/list';
 import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
 import ActionHome from 'material-ui/lib/svg-icons/action/home';
 import ImageIcon from './imageicon.js';
+import Helmet from "react-helmet";
 
 const SelectableList = SelectableContainerEnhance(List);
 
@@ -75,11 +76,20 @@ let App = React.createClass({
                 this.props.history.isActive('/github') ? 'GitHub' :
                     this.props.history.isActive('/blog') ? 'Blog' : '';
 
-        console.log('Children: ' + this.props.children);
-
         return (
             <div
                 style={styles.root}>
+                <Helmet
+                    titleTemplate="%s | mattec.se"
+                    meta={[
+                        {"name" : "author", "content": "Mattias Cederlund"},
+                        {"name": "description", "content": "React playground"},
+                        {"property": "og:title", "content": ""},
+                        {"property": "og:type", "content": "website"},
+                        {"property": "og:image", "content": ""},
+                        {"property": "og:url", "content": 'https://mattec.se' + this.props.location.pathname}
+                    ]}/>
+
                 <div
                     style={styles.content}>
                     {this.props.children}

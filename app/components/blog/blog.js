@@ -2,6 +2,7 @@ import React from 'react';
 import BlogEntryList from './blogentrylist.js';
 import BlogSide from './blogside.js';
 import {Row, Col} from 'react-bootstrap';
+import Helmet from "react-helmet";
 
 let Blog = React.createClass({
     getInitialState() {
@@ -53,6 +54,10 @@ let Blog = React.createClass({
         return (
             <div
                 style={styles.container}>
+                <Helmet
+                    title="Blog"
+                    meta={[
+                    ]} />
                 <Row
                     style={styles.entryContainer}>
                     <Col

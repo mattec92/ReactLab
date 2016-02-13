@@ -1,5 +1,6 @@
 import React from 'react';
 import BlogEntry from './blogentry.js'
+import Helmet from "react-helmet";
 
 let BlogEntryStandalone = React.createClass({
     getInitialState() {
@@ -40,6 +41,10 @@ let BlogEntryStandalone = React.createClass({
         return (
             <div
                 style={styles.container}>
+                <Helmet
+                    title={this.state.entry.title}
+                    meta={[
+                    ]} />
                 <BlogEntry
                     id={this.props.params.id}
                     entry={this.state.entry}
