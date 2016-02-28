@@ -1,38 +1,9 @@
 import React from 'react';
-import BlogEntryList from './blogentrylist.js';
-import BlogSide from './blogside.js';
 import {Row, Col} from 'react-bootstrap';
-import Helmet from "react-helmet";
+
+import BlogSide from './blogside.js';
 
 let Blog = React.createClass({
-    getInitialState() {
-        return {
-            entries: []
-        };
-    },
-
-    componentDidMount() {
-        this.loadBlogPosts();
-    },
-
-    loadBlogPosts() {
-        const blogUrl = DEBUG ? 'http://localhost:8080/api/blog' : '/api/blog';
-
-        $.ajax({
-            url: blogUrl,
-            dataType: 'json',
-            type: 'GET',
-            success: function (data) {
-                this.setState({
-                    entries: data
-                });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(blogUrl, status, err.toString());
-            }.bind(this)
-        });
-    },
-
     render() {
         const styles = {
             container: {
@@ -47,26 +18,20 @@ let Blog = React.createClass({
                 margin: 0,
                 padding: 0
             },
-            list: {},
             side: {}
         };
 
         return (
             <div
                 style={styles.container}>
-                <Helmet
-                    title="Blog"
-                    meta={[
-                    ]} />
+                {this.props.helmet}
                 <Row
                     style={styles.entryContainer}>
                     <Col
                         sm={1} />
                     <Col
                         sm={7}>
-                        <BlogEntryList
-                            entries={this.state.entries}
-                            style={styles.list}/>
+                        {this.props.main}
                     </Col>
                     <Col
                         sm={3}>

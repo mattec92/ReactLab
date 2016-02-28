@@ -1,11 +1,15 @@
 import React from 'react';
-import BlogEntry from './blogentry.js'
+import {Row, Col} from 'react-bootstrap';
 import Helmet from "react-helmet";
 
-let BlogEntryStandalone = React.createClass({
+import Blog from './blog.js';
+import BlogEntry from './entry/blogentry.js'
+
+let BlogStandalone = React.createClass({
+
     getInitialState() {
         return {
-            entry: []
+            entry: ''
         };
     },
 
@@ -32,26 +36,25 @@ let BlogEntryStandalone = React.createClass({
     },
 
     render() {
-        const styles = {
-            container: {
-                paddingTop: 64
-            }
-        };
+        const styles = {};
 
         return (
-            <div
-                style={styles.container}>
+            <Blog
+                helmet={
                 <Helmet
                     title={this.state.entry.title}
                     meta={[
                     ]} />
-                <BlogEntry
-                    id={this.props.params.id}
-                    entry={this.state.entry}
-                    isStandalone={true}/>
-            </div>
+                }
+                main={
+                    <BlogEntry
+                        id={this.props.params.id}
+                        entry={this.state.entry}
+                        isStandalone={true}/>
+                }
+                />
         );
     }
 });
 
-export default BlogEntryStandalone;
+export default BlogStandalone;
