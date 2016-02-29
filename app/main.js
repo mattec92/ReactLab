@@ -11,6 +11,7 @@ import Phoniac from './components/feature/phoniac.js';
 import Github from './components/feature/github.js';
 import BlogList from './components/blog/bloglist.js';
 import BlogStandalone from './components/blog/blogstandalone.js';
+import BlogAdmin from './components/blog/admin/blogadmin.js';
 
 injectTapEventPlugin();
 
@@ -40,6 +41,7 @@ const routes = (
             <Route path="github" component={Github}/>
             <Route path="blog" component={BlogList}/>
             <Route path="blog/:id" component={BlogStandalone}/>
+            <Route path="blogadmin" component={BlogAdmin}/>
         </Route>
     </Router>
 );

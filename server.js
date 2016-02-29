@@ -14,6 +14,12 @@ app.get('/api/hello', function (req, res) {
     res.send('Hello World!');
 });
 
+app.get('/api/auth', function(req, res) {
+    const secret = req.body.secret;
+
+
+});
+
 app.post('/api/contact', function (req, res) {
     const email = req.body.email;
     const subject = req.body.subject;
@@ -81,6 +87,8 @@ app.get('/api/blog', function (req, res) {
         function (collection, closeDBConnection) {
             var cursor = collection.find();
             var entries = [];
+
+            cursor.sort({date: -1});
             cursor.each(
                 function (error, result) {
                     if (error) {
@@ -117,6 +125,131 @@ app.get('/api/blog/:id', function (req, res) {
                         res.json(result);
                     }
                     closeDBConnection();
+                }
+            );
+        },
+        function () {
+            res.status(400).json({error: 'Could not get entry: DB connection failed.'});
+        }
+    );
+});
+
+app.put('/api/blog', function (req, res) {
+    const auth = req.body.auth;
+    const isNew = req.body.isNew;
+    const isIdUpdate = req.body.isIdUpdate;
+
+    const date = req.body.date;
+    const id = req.body.id;
+    const title = req.body.title;
+    const body = req.body.body;
+    const author = req.body.author;
+
+    if (!auth === "secret") {
+        res.status(401).json({error: 'Auth failed'});
+        console.log('Auth failed');
+        return;
+    }
+
+    if (!date) {
+        res.status(400).json({error: 'Date invalid'});
+        console.log('Date invalid');
+        return;
+    }
+
+    if (!id) {
+        res.status(400).json({error: 'Id invalid'});
+        console.log('Id invalid');
+        return;
+    }
+
+    if (!title) {
+        res.status(400).json({error: 'Title invalid'});
+        console.log('Title invalid');
+        return;
+    }
+
+    if (!body) {
+        res.status(400).json({error: 'Body invalid'});
+        console.log('Body invalid');
+        return;
+    }
+
+    if (!author) {
+        res.status(400).json({error: 'Author invalid'});
+        console.log('Author invalid');
+        return;
+    }
+
+    if (isIdUpdate === 'true') {
+        res.status(400).json({error: 'Id updates are not supported'});
+        console.log('Id updates are not supported');
+        return;
+    }
+
+    MongoDB(
+        'blog',
+        'entry',
+        function (collection, closeDBConnection) {
+            collection.findOne(
+                {"id": id},
+                function (error, result) {
+                    if (error || !result) {
+                        console.log('No entry with id; ' + id + ', creating entry');
+                        collection.insertOne(
+                            {
+                                "id": id,
+                                "date": new Date(date),
+                                "title": title,
+                                "body": body,
+                                "author": author
+                            },
+                            function (error, result) {
+                                if (error) {
+                                    console.log('Failed to create entry with id; ' + id);
+                                    res.status(400).json({error: 'Could not save blog entry.'});
+                                }
+                                else {
+                                    console.log('Entry with id; ' + id + ', created');
+                                    res.json({result: 'Blog entry was saved.'});
+                                }
+                                closeDBConnection();
+                            }
+                        );
+                    }
+                    else {
+                        if (isNew === 'false') {
+                            console.log('Entry with id; ' + id + ' exists and will be updated');
+                            collection.updateOne(
+                                {
+                                    "id": id
+                                },
+                                {
+                                    "id": id,
+                                    "date": new Date(date),
+                                    "title": title,
+                                    "body": body,
+                                    "author": author
+                                },
+                                function (error, result) {
+                                    if (error) {
+                                        console.log('Failed to update entry with id; ' + id);
+                                        res.status(400).json({error: 'Could not update blog entry.'});
+                                    }
+                                    else {
+                                        console.log('Entry with id; ' + id + ', updated');
+                                        res.json({result: 'Blog entry was updated.'});
+                                    }
+                                    closeDBConnection();
+                                }
+                            );
+                        }
+                        else {
+                            console.log('Entry with id; ' + id + ' exists, collision');
+                            res.status(400).json({error: 'Blog entry id collision for new entry.'});
+                            closeDBConnection();
+                        }
+                    }
                 }
             );
         },

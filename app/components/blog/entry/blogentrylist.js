@@ -7,6 +7,7 @@ let BlogEntryList = React.createClass({
             return (
                 <BlogEntry
                     id={blogEntry.id}
+                    key={blogEntry.id}
                     entry={blogEntry}
                     isStandalone={false}/>
             );

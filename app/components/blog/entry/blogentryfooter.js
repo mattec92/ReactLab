@@ -3,14 +3,15 @@ import React from 'react';
 let BlogEntryFooter = React.createClass({
     render() {
         const styles = {
-            container: {
-            }
+            container: {}
         };
 
         return (
             <div
                 style={styles.container}>
-                This is the blog entry footer.
+                <h4>
+                    {this.props.entry.author}
+                </h4>
             </div>
         );
     }
