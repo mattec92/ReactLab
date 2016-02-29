@@ -22,6 +22,9 @@ let BlogAdmin = React.createClass({
     getInitialState() {
         return {
             authed: false,
+            username: '',
+            password: '',
+            secret: '',
             entries: [],
             dialogOpenedEntry: {},
             dialogOpen: false,
@@ -33,7 +36,9 @@ let BlogAdmin = React.createClass({
     },
 
     componentDidMount() {
-        this.loadBlogPosts();
+        if (this.state.authed) {
+            this.loadBlogPosts();
+        }
     },
 
     loadBlogPosts() {
@@ -96,6 +101,52 @@ let BlogAdmin = React.createClass({
         });
     },
 
+    handleUsernameChange(e) {
+        this.setState({
+            username: e.target.value
+        });
+    },
+
+    handlePasswordChange(e) {
+        this.setState({
+            password: e.target.value
+        });
+    },
+
+    onLoginClick() {
+        console.log('Login button clicked');
+
+        let postData = {
+            username: this.state.username,
+            password: this.state.password
+        };
+
+        const authUrl = DEBUG ? 'http://localhost:8080/api/auth' : '/api/auth';
+
+        $.ajax({
+            url: authUrl,
+            dataType: 'json',
+            type: 'POST',
+            data: postData,
+            success: function (data) {
+                this.setState({
+                    authed: true,
+                    secret: data.secret,
+                    snackbarOpen: true,
+                    snackbarMessage: 'Sucess logging in: ' + JSON.stringify(data)
+                });
+                this.loadBlogPosts();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(authUrl, status, err.toString(), JSON.stringify(xhr));
+                this.setState({
+                    snackbarOpen: true,
+                    snackbarMessage: 'Failed logging in: ' + JSON.stringify(xhr)
+                });
+            }.bind(this)
+        });
+    },
+
     dialogNewEntry() {
         console.log('New entry button clicked');
         this.setState({
@@ -127,7 +178,7 @@ let BlogAdmin = React.createClass({
         console.log('Save dialog button clicked');
 
         let postData = this.state.dialogOpenedEntry;
-        postData.secret = 'secret';
+        postData.auth = this.state.secret;
         postData.isNew = this.state.dialogOpenFromNew;
         postData.isIdUpdate = !this.state.dialogOpenFromNew && this.state.dialogOpenedEntry.id !== this.state.dialogOpenId;
 
@@ -196,12 +247,50 @@ let BlogAdmin = React.createClass({
         }, this);
     },
 
-    render() {
+    getViews() {
+        if (this.state.authed) {
+            return this.getAuthedViews();
+        }
+        else {
+            return this.getNonAuthedViews();
+        }
+    },
+
+    getNonAuthedViews() {
         const styles = {
-            container: {
-                paddingTop: 64,
-                width: '100%'
+            button: {
+                margin: 20
             },
+            dialogTextField: {
+                margin: 20
+            }
+        };
+
+        return (
+            <div>
+                <TextField
+                    style={styles.dialogTextField}
+                    floatingLabelText="Username"
+                    type="password"
+                    onChange={this.handleUsernameChange}
+                    value={this.state.username}/>
+                <TextField
+                    style={styles.dialogTextField}
+                    floatingLabelText="Password"
+                    type="password"
+                    onChange={this.handlePasswordChange}
+                    value={this.state.password}/>
+                <RaisedButton
+                    style={styles.button}
+                    secondary={true}
+                    onTouchTap={this.onLoginClick}
+                    label="Login"/>
+            </div>
+        );
+    },
+
+    getAuthedViews() {
+        const styles = {
             button: {
                 margin: 20
             },
@@ -222,8 +311,7 @@ let BlogAdmin = React.createClass({
         ];
 
         return (
-            <div
-                style={styles.container}>
+            <div>
                 <RaisedButton
                     style={styles.button}
                     secondary={true}
@@ -298,6 +386,22 @@ let BlogAdmin = React.createClass({
                         onChange={this.handleAuthorChange}
                         value={this.state.dialogOpenedEntry.author}/>
                 </Dialog>
+            </div>
+        );
+    },
+
+    render() {
+        const styles = {
+            container: {
+                paddingTop: 64,
+                width: '100%'
+            }
+        };
+
+        return (
+            <div
+                style={styles.container}>
+                {this.getViews()}
                 <Snackbar
                     open={this.state.snackbarOpen}
                     message={this.state.snackbarMessage}
