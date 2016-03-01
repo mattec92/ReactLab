@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import DateFormat from 'dateformat';
 
 let BlogEntryHeader = React.createClass({
     buildTitle() {
@@ -22,6 +23,11 @@ let BlogEntryHeader = React.createClass({
         }
     },
 
+    buildDate() {
+        const date = new Date(this.props.entry.date);
+        return DateFormat(date, "yyyy-mm-dd, HH:MM");
+    },
+
     render() {
         const styles = {
             container: {}
@@ -31,7 +37,7 @@ let BlogEntryHeader = React.createClass({
             <div
                 style={styles.container}>
                 <p>
-                    {this.props.entry.date}
+                    {this.buildDate()}
                 </p>
                 {this.buildTitle()}
             </div>
