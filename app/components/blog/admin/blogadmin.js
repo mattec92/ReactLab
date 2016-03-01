@@ -174,6 +174,40 @@ let BlogAdmin = React.createClass({
         });
     },
 
+    dialogDelete() {
+        console.log('Delete dialog button clicked');
+
+        let postData = {
+            id: this.state.dialogOpenedEntry.id,
+            auth: this.state.secret
+        };
+
+        const deleteEntryUrl = DEBUG ? 'http://localhost:8080/api/blog' : '/api/blog';
+
+        $.ajax({
+            url: deleteEntryUrl,
+            dataType: 'json',
+            type: 'DELETE',
+            data: postData,
+            success: function (data) {
+                this.setState({
+                    dialogOpenedEntry: {},
+                    dialogOpen: false,
+                    snackbarOpen: true,
+                    snackbarMessage: 'Sucess deleting entry'
+                });
+                this.loadBlogPosts();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(deleteEntryUrl, status, err.toString(), JSON.stringify(xhr));
+                this.setState({
+                    snackbarOpen: true,
+                    snackbarMessage: 'Failed deleting entry: ' + JSON.stringify(xhr)
+                });
+            }.bind(this)
+        });
+    },
+
     dialogSaveEntry() {
         console.log('Save dialog button clicked');
 
@@ -291,6 +325,9 @@ let BlogAdmin = React.createClass({
 
     getAuthedViews() {
         const styles = {
+            h1: {
+                margin: 20
+            },
             button: {
                 margin: 20
             },
@@ -300,6 +337,10 @@ let BlogAdmin = React.createClass({
         };
 
         const actions = [
+            <RaisedButton
+                label="Delete"
+                primary={true}
+                onTouchTap={this.dialogDelete}/>,
             <FlatButton
                 label="Cancel"
                 secondary={true}
@@ -312,6 +353,10 @@ let BlogAdmin = React.createClass({
 
         return (
             <div>
+                <h1
+                    style={styles.h1}>
+                    Hi. If you made it this far, please post something funny to let me know.
+                </h1>
                 <RaisedButton
                     style={styles.button}
                     secondary={true}

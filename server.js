@@ -1,71 +1,132 @@
-var path = require('path');
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var MongoDB = require('./mongo.js').MongoDB;
-var cors = require('cors');
-var utils = require('./utils.js');
+const path = require('path');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const MongoDB = require('./mongo.js').MongoDB;
+const cors = require('cors');
+const utils = require('./utils.js');
+
+const MAX_AUTH_ATTEMPTS = 5;
+const AUTH_COOLDOWN_TIME_MINUTES = 5;
+const ENABLE_AUTH_VALIDATION_ENDPOINT = false;
 
 app.set('port', (process.env.PORT || 8080));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
-app.get('/api/hello', function (req, res) {
-    res.send('Hello World!');
-});
-
 app.post('/api/auth', function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
+
+    if (!username) {
+        res.status(400).json({error: 'Username not provided'});
+        return;
+    }
+
+    if (!password) {
+        res.status(400).json({error: 'Password not provided'});
+        return;
+    }
+
     const hashedPassword = utils.getHash(password);
 
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    console.log('Requester ip: ' + ip);
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+    const date = new Date();
+    date.setMinutes(date.getMinutes() - AUTH_COOLDOWN_TIME_MINUTES);
 
     MongoDB(
         'blog',
         'logins',
         function (collection, closeDBConnection) {
-            collection.insertOne({
-                    "date": new Date(),
-                    "username": username,
-                    "password": hashedPassword,
-                    "ip": ip
-                },
-                function (error, result) {
-                    closeDBConnection();
-                });
+            collection.count(
+                {
+                    ip: ip,
+                    date: {$gt: date},
+                    successful: false
+                }
+            ).then(
+                function (attempts) {
+                    console.log('This ip made ' + attempts + ' unsuccessful attempts since ' + date.toTimeString());
+
+                    if (attempts < MAX_AUTH_ATTEMPTS) {
+                        utils.login(
+                            username,
+                            hashedPassword,
+                            function (token) {
+                                collection.insertOne({
+                                        date: new Date(),
+                                        username: username,
+                                        password: hashedPassword,
+                                        ip: ip,
+                                        successful: true,
+                                        capped: false
+                                    },
+                                    function () {
+                                        closeDBConnection();
+                                    });
+
+                                res.json({secret: token});
+                            },
+                            function () {
+                                collection.insertOne({
+                                        date: new Date(),
+                                        username: username,
+                                        password: hashedPassword,
+                                        ip: ip,
+                                        successful: false,
+                                        capped: false
+                                    },
+                                    function () {
+                                        closeDBConnection();
+                                    });
+
+                                res.status(401).json({error: 'Login failed'});
+                            }
+                        );
+                    }
+                    else {
+                        collection.insertOne({
+                                date: new Date(),
+                                username: username,
+                                password: hashedPassword,
+                                ip: ip,
+                                successful: false,
+                                capped: true
+                            },
+                            function () {
+                                closeDBConnection();
+                            });
+
+                        res.status(401).json({error: 'Too many unsuccessful attempts attempts'});
+                    }
+                }
+            );
         },
         function () {
-
-        }
-    );
-
-    utils.login(
-        username,
-        hashedPassword,
-        function (token) {
-            res.json({secret: token})
-        },
-        function () {
-            res.status(401).json({error: 'Login failed'});
+            res.status(400).json({error: 'Could not get entry: DB connection failed.'});
         }
     );
 });
 
 app.post('/api/validate', function (req, res) {
-    const secret = req.body.secret;
-    console.log(secret);
-    utils.validateToken(
-        secret,
-        function () {
-            res.json({result: "success"});
-        },
-        function () {
-            res.json({result: "failure"});
-        }
-    );
+    if (ENABLE_AUTH_VALIDATION_ENDPOINT) {
+        const secret = req.body.secret;
+        console.log(secret);
+        utils.validateToken(
+            secret,
+            function () {
+                res.json({result: 'success'});
+            },
+            function () {
+                res.json({result: 'failure'});
+            }
+        );
+    }
+    else {
+        res.json({result: 'failure'});
+    }
 });
 
 app.post('/api/contact', function (req, res) {
@@ -107,12 +168,12 @@ app.post('/api/contact', function (req, res) {
         'message',
         function (collection, closeDBConnection) {
             collection.insertOne({
-                    "date": new Date(),
-                    "email": email,
-                    "subject": subject,
-                    "message": message
+                    date: new Date(),
+                    email: email,
+                    subject: subject,
+                    message: message
                 },
-                function (error, result) {
+                function (error) {
                     if (error) {
                         res.status(400).json({error: 'Could not send message: Insert failed.'});
                     }
@@ -120,7 +181,8 @@ app.post('/api/contact', function (req, res) {
                         res.json({result: 'Message was sent.'});
                     }
                     closeDBConnection();
-                });
+                }
+            );
         },
         function () {
             res.status(400).json({error: 'Could not send message: DB connection failed.'});
@@ -133,14 +195,15 @@ app.get('/api/blog', function (req, res) {
         'blog',
         'entry',
         function (collection, closeDBConnection) {
-            var cursor = collection.find();
-            var entries = [];
+            const cursor = collection.find();
+            const entries = [];
 
             cursor.sort({date: -1});
             cursor.each(
                 function (error, result) {
                     if (error) {
                         res.status(404).json({error: 'Could not find any entries'});
+                        closeDBConnection();
                     }
                     else if (!result) {
                         res.json(entries);
@@ -164,7 +227,7 @@ app.get('/api/blog/:id', function (req, res) {
         'entry',
         function (collection, closeDBConnection) {
             collection.findOne(
-                {"id": req.params.id},
+                {id: req.params.id},
                 function (error, result) {
                     if (error || !result) {
                         res.status(404).json({error: 'Could not find an entry with id ' + req.params.id});
@@ -186,7 +249,6 @@ app.put('/api/blog', function (req, res) {
     const auth = req.body.auth;
     const isNew = req.body.isNew;
     const isIdUpdate = req.body.isIdUpdate;
-
     const date = req.body.date;
     const id = req.body.id;
     const title = req.body.title;
@@ -235,6 +297,7 @@ app.put('/api/blog', function (req, res) {
         return;
     }
 
+    //TODO: Backoff for validation
     utils.validateToken(
         auth,
         function () {
@@ -243,17 +306,17 @@ app.put('/api/blog', function (req, res) {
                 'entry',
                 function (collection, closeDBConnection) {
                     collection.findOne(
-                        {"id": id},
+                        {id: id},
                         function (error, result) {
                             if (error || !result) {
                                 console.log('No entry with id; ' + id + ', creating entry');
                                 collection.insertOne(
                                     {
-                                        "id": id,
-                                        "date": new Date(date),
-                                        "title": title,
-                                        "body": body,
-                                        "author": author
+                                        id: id,
+                                        date: new Date(date),
+                                        title: title,
+                                        body: body,
+                                        author: author
                                     },
                                     function (error, result) {
                                         if (error) {
@@ -273,14 +336,14 @@ app.put('/api/blog', function (req, res) {
                                     console.log('Entry with id; ' + id + ' exists and will be updated');
                                     collection.updateOne(
                                         {
-                                            "id": id
+                                            id: id
                                         },
                                         {
-                                            "id": id,
-                                            "date": new Date(date),
-                                            "title": title,
-                                            "body": body,
-                                            "author": author
+                                            id: id,
+                                            date: new Date(date),
+                                            title: title,
+                                            body: body,
+                                            author: author
                                         },
                                         function (error, result) {
                                             if (error) {
@@ -303,6 +366,87 @@ app.put('/api/blog', function (req, res) {
                             }
                         }
                     );
+                },
+                function () {
+                    res.status(400).json({error: 'Could not get entry: DB connection failed.'});
+                }
+            );
+        },
+        function () {
+            res.status(401).json({error: 'Auth failed'});
+        }
+    );
+});
+
+app.delete('/api/blog', function (req, res) {
+    const auth = req.body.auth;
+    const id = req.body.id;
+
+    if (!auth) {
+        res.status(401).json({error: 'Auth failed'});
+        console.log('Auth failed');
+        return;
+    }
+
+    if (!id) {
+        res.status(400).json({error: 'Id invalid'});
+        console.log('Id invalid');
+        return;
+    }
+
+    //TODO: Backoff
+    utils.validateToken(
+        auth,
+        function () {
+            MongoDB(
+                'blog',
+                'entry',
+                function (entryCollection, closeEntryDBConnection) {
+                    entryCollection.findOne(
+                        {
+                            id: id
+                        },
+                        function (error, result) {
+                            if (error || !result) {
+                                res.status(404).json({error: 'Could not find an entry with id ' + id});
+                                closeEntryDBConnection();
+                            }
+                            else {
+                                MongoDB(
+                                    'blog',
+                                    'entry_archive',
+                                    function (archiveCollection, closeArhiveDBConnection) {
+                                        archiveCollection.insertOne(
+                                            result,
+                                            function (error) {
+                                                if (error) {
+                                                    res.status(404).json({error: 'Could not copy entry with id ' + id + ' to archive'});
+                                                }
+                                                else {
+                                                    entryCollection.remove(
+                                                        {id : id},
+                                                        function (error, result) {
+                                                            if (error || !result) {
+                                                                res.status(404).json({error: 'Could not remove entry with id ' + id});
+                                                            }
+                                                            else {
+                                                                res.json({result: 'success'});
+                                                            }
+                                                            closeEntryDBConnection();
+                                                        }
+                                                    )
+                                                }
+                                                closeArhiveDBConnection();
+                                            }
+                                        )
+                                    },
+                                    function () {
+                                        res.status(400).json({error: 'Could not get entry archive: DB connection failed.'});
+                                    }
+                                );
+                            }
+                        }
+                    )
                 },
                 function () {
                     res.status(400).json({error: 'Could not get entry: DB connection failed.'});

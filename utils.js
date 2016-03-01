@@ -27,7 +27,6 @@ const getServerSecret = function (onSuccess, onFailure) {
                     }
                     else {
                         closeDBConnection();
-                        console.log('Server secret: ' + result.password);
                         onSuccess(result.password);
                     }
                 }
