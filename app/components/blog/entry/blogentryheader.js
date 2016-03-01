@@ -13,7 +13,7 @@ let BlogEntryHeader = React.createClass({
         else {
             return (
                 <Link
-                    to={'blog/' + this.props.entry.id}>
+                    to={'/blog/' + this.props.entry.id}>
                     <h1>
                         {this.props.entry.title}
                     </h1>

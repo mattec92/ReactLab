@@ -8,8 +8,13 @@ import BlogEntryFooter from './blogentryfooter.js';
 
 let BlogEntry = React.createClass({
     getMarkup() {
-        var markup = marked(this.props.entry.body, {sanitize: true});
-        return {__html: markup};
+        if (this.props.entry) {
+            var markup = marked(this.props.entry.body, {sanitize: true});
+            return {__html: markup};
+        }
+        else {
+            return {__html: ''};
+        }
     },
 
     render() {
