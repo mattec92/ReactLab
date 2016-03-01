@@ -24,8 +24,12 @@ let BlogEntryHeader = React.createClass({
     },
 
     buildDate() {
-        const date = new Date(this.props.entry.date);
-        return DateFormat(date, "yyyy-mm-dd, HH:MM");
+        if (this.props.entry) {
+            return DateFormat(new Date(this.props.entry.date), "yyyy-mm-dd, HH:MM");
+        }
+        else {
+            return '';
+        }
     },
 
     render() {
