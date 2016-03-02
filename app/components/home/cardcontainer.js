@@ -1,6 +1,7 @@
 import React from 'react';
-import Card from './card.js';
 import {Row, Col} from 'react-bootstrap';
+
+import Card from './card.js';
 
 let CardContainer = React.createClass({
     render() {
@@ -12,29 +13,29 @@ let CardContainer = React.createClass({
         };
 
         return (
-                <Row
-                    style={styles.root}>
-                    <Col
-                        sm={2}/>
-                    <Col
-                        sm={4}>
-                        <Card
-                            imageDescription="Phoniac"
-                            imageUrl="../img/phoniac_card.jpg"
-                            title="Phoniac"
-                            path="/phoniac"/>
-                    </Col>
-                    <Col
-                        sm={4}>
-                        <Card
-                            imageDescription="GitHub"
-                            imageUrl="../img/github_card.jpg"
-                            title="GitHub"
-                            path="/github"/>
-                    </Col>
-                    <Col
-                        sm={2}/>
-                </Row>
+            <Row
+                style={styles.root}>
+                <Col
+                    sm={2}/>
+                <Col
+                    sm={4}>
+                    <Card
+                        imageDescription="Phoniac"
+                        imageUrl="../img/phoniac_card.jpg"
+                        title="Phoniac"
+                        path="/phoniac"/>
+                </Col>
+                <Col
+                    sm={4}>
+                    <Card
+                        imageDescription="GitHub"
+                        imageUrl="../img/github_card.jpg"
+                        title="GitHub"
+                        path="/github"/>
+                </Col>
+                <Col
+                    sm={2}/>
+            </Row>
         );
     }
 });

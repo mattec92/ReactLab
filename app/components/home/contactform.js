@@ -54,7 +54,7 @@ let ContactForm = React.createClass({
             validationResult: this.state.validationResult
         };
 
-        const contactUrl =  DEBUG ? 'http://localhost:8080/api/contact' : '/api/contact';
+        const contactUrl = DEBUG ? 'http://localhost:8080/api/contact' : '/api/contact';
 
         $.ajax({
             url: contactUrl,

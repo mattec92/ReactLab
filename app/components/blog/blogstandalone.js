@@ -38,12 +38,23 @@ let BlogStandalone = React.createClass({
     render() {
         const styles = {};
 
+        let description = "";
+        let title = "";
+
+        if (this.state.entry) {
+            description = this.state.entry.body.substring(0, 100) + "...";
+                title = this.state.entry.title + " | mattec.se";
+        }
+
         return (
             <Blog
                 helmet={
                 <Helmet
                     title={this.state.entry.title}
                     meta={[
+                        {"name": "description", "content": description},
+                        {"property": "og:title", "content": title},
+                        {"property": "og:description", "content": description}
                     ]} />
                 }
                 main={

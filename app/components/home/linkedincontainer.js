@@ -1,7 +1,7 @@
 import React from 'react';
-import RaisedButton from '../../../node_modules/material-ui/lib/raised-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 import Typography from 'material-ui/lib/styles';
-import SvgIcon from '../../../node_modules/material-ui/lib/svg-icon';
+import SvgIcon from 'material-ui/lib/svg-icon';
 
 let LinkedInContainer = React.createClass({
     render() {

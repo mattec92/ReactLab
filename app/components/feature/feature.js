@@ -1,5 +1,5 @@
 import React from 'react';
-import RaisedButton from '../../../node_modules/material-ui/lib/raised-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 let Feature = React.createClass({
         render() {
@@ -35,6 +35,7 @@ let Feature = React.createClass({
                     <img
                         style={styles.image}
                         src={this.props.image}/>
+
                     <p
                         style={styles.text}>
                         {this.props.promoText}

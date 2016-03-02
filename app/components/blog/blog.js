@@ -28,7 +28,7 @@ let Blog = React.createClass({
                 <Row
                     style={styles.entryContainer}>
                     <Col
-                        sm={1} />
+                        sm={1}/>
                     <Col
                         sm={7}>
                         {this.props.main}
@@ -39,7 +39,7 @@ let Blog = React.createClass({
                             style={styles.side}/>
                     </Col>
                     <Col
-                        sm={1} />
+                        sm={1}/>
                 </Row>
             </div>
         );

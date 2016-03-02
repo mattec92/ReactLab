@@ -1,6 +1,7 @@
 import React from 'react';
-import Feature from './feature.js';
 import Helmet from "react-helmet";
+
+import Feature from './feature.js';
 
 let Github = React.createClass({
     render() {
@@ -9,6 +10,9 @@ let Github = React.createClass({
                 <Helmet
                     title="GitHub"
                     meta={[
+                        {"name": "description", "content": "Some of my personal projects, including this site, and coursework from KTH is available on my GitHub."},
+                        {"property": "og:title", "content": "GitHub | mattec.se"},
+                        {"property": "og:description", "content": "Some of my personal projects, including this site, and coursework from KTH is available on my GitHub."}
                     ]}/>
                 <Feature
                     title="Github"

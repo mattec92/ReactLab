@@ -5,6 +5,7 @@ import createHashHistory from 'history/lib/createHashHistory';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import ga from 'react-ga';
+
 import App from './components/app.js';
 import Home from './components/home/home.js';
 import Phoniac from './components/feature/phoniac.js';

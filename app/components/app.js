@@ -1,13 +1,13 @@
 import React from 'react';
-import Footer from './footer.js';
 import AppBar from 'material-ui/lib/app-bar';
 import LeftNav from 'material-ui/lib/left-nav';
 import ListItem from 'material-ui/lib/lists/list-item';
 import List from 'material-ui/lib/lists/list';
 import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
 import ActionHome from 'material-ui/lib/svg-icons/action/home';
-import ImageIcon from './imageicon.js';
 import Helmet from "react-helmet";
+
+import Footer from './footer.js';
 
 const SelectableList = SelectableContainerEnhance(List);
 
@@ -80,13 +80,15 @@ let App = React.createClass({
             <div
                 style={styles.root}>
                 <Helmet
+                    title="Mattias Cederlund"
                     titleTemplate="%s | mattec.se"
                     meta={[
                         {"name" : "author", "content": "Mattias Cederlund"},
-                        {"name": "description", "content": "React playground"},
-                        {"property": "og:title", "content": ""},
+                        {"name": "description", "content": "Welcome to my React playground. This is where I try new, cool technologies and showcase what I have done so far. Phoniac - Github - Blog"},
+                        {"property": "og:description", "content": "Welcome to my React playground. This is where I try new, cool technologies and showcase what I have done so far. Phoniac - Github - Blog"},
+                        {"property": "og:title", "content": "Mattias Cederlund | mattec.se"},
                         {"property": "og:type", "content": "website"},
-                        {"property": "og:image", "content": ""},
+                        {"property": "og:image", "content": "https://mattec.se/img/m_logo.png"},
                         {"property": "og:url", "content": 'https://mattec.se' + this.props.location.pathname}
                     ]}/>
 
@@ -114,8 +116,7 @@ let App = React.createClass({
                             leftIcon={<ActionHome />}/>
                         <ListItem
                             primaryText="Phoniac"
-                            value="/phoniac"
-                            /*leftIcon={<ImageIcon icon="img/phoniac_logo.png"/>}*//>
+                            value="/phoniac"/>
                         <ListItem
                             primaryText="GitHub"
                             value="/github"/>

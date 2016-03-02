@@ -46,6 +46,9 @@ let BlogList = React.createClass({
                 <Helmet
                     title="Blog"
                     meta={[
+                        {"name": "description", "content": "The build a blog from scratch project. It's simple, I build a blog myself and write stuff about it, in it."},
+                        {"property": "og:title", "content": "Blog | mattec.se"},
+                        {"property": "og:description", "content": "The build a blog from scratch project. It's simple, I build a blog myself and write stuff about it, in it."}
                     ]} />
                 }
                 main={

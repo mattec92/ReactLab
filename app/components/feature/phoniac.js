@@ -1,6 +1,7 @@
 import React from 'react';
-import Feature from './feature.js';
 import Helmet from "react-helmet";
+
+import Feature from './feature.js';
 
 let Phoniac = React.createClass({
     render() {
@@ -9,6 +10,9 @@ let Phoniac = React.createClass({
                 <Helmet
                     title="Phoniac"
                     meta={[
+                        {"name": "description", "content": "Phoniac is an Android application for monitoring your phone usage. It is showing statistics of when and how much you actually use your phone. It is probably more than you think!"},
+                        {"property": "og:title", "content": "Phoniac | mattec.se"},
+                        {"property": "og:description", "content": "Phoniac is an Android application for monitoring your phone usage. It is showing statistics of when and how much you actually use your phone. It is probably more than you think!"}
                     ]}/>
                 <Feature
                     title="Phoniac"
