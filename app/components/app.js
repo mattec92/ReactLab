@@ -74,7 +74,8 @@ let App = React.createClass({
         const title =
             this.props.history.isActive('/phoniac') ? 'Phoniac' :
                 this.props.history.isActive('/github') ? 'GitHub' :
-                    this.props.history.isActive('/blog') ? 'Blog' : '';
+                    this.props.history.isActive('/blog') ? 'Blog' :
+                        this.props.history.isActive('/mattiascederlund.se') ? 'mattiascederlund.se' : '';
 
         return (
             <div
@@ -120,6 +121,9 @@ let App = React.createClass({
                         <ListItem
                             primaryText="GitHub"
                             value="/github"/>
+                        <ListItem
+                            primaryText="mattiascederlund.se"
+                            value="/mattiascederlund.se"/>
                         <ListItem
                             primaryText="Blog"
                             value="/blog"/>

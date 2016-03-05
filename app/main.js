@@ -13,6 +13,7 @@ import Github from './components/feature/github.js';
 import BlogList from './components/blog/bloglist.js';
 import BlogStandalone from './components/blog/blogstandalone.js';
 import BlogAdmin from './components/blog/admin/blogadmin.js';
+import MattiasCederlundSe from './components/feature/mattiascederlundse.js';
 
 injectTapEventPlugin();
 
@@ -43,6 +44,7 @@ const routes = (
             <Route path="blog" component={BlogList}/>
             <Route path="blog/:id" component={BlogStandalone}/>
             <Route path="blogadmin" component={BlogAdmin}/>
+            <Route path="mattiascederlund.se" component={MattiasCederlundSe}/>
         </Route>
     </Router>
 );
