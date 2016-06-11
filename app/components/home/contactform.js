@@ -245,4 +245,4 @@ let ContactForm = React.createClass({
     }
 });
 
-export default ContactForm
+export default ContactForm;

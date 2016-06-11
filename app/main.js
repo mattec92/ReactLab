@@ -14,6 +14,7 @@ import BlogList from './components/blog/bloglist.js';
 import BlogStandalone from './components/blog/blogstandalone.js';
 import BlogAdmin from './components/blog/admin/blogadmin.js';
 import MattiasCederlundSe from './components/feature/mattiascederlundse.js';
+import FacebookShareChecker from './components/sharechecker/facebookshareshecker.js';
 
 injectTapEventPlugin();
 
@@ -46,6 +47,7 @@ const routes = (
             <Route path="blogadmin" component={BlogAdmin}/>
             <Route path="mattiascederlund.se" component={MattiasCederlundSe}/>
         </Route>
+        <Route path="share" component={FacebookShareChecker}/>
     </Router>
 );
 
