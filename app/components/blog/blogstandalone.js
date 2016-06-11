@@ -4,12 +4,14 @@ import Helmet from "react-helmet";
 
 import Blog from './blog.js';
 import BlogEntry from './entry/blogentry.js'
+import BlogEntryNotFound from './entry/blogentrynotfound.js';
 
 let BlogStandalone = React.createClass({
 
     getInitialState() {
         return {
-            entry: ''
+            entry: '',
+            error: false
         };
     },
 
@@ -26,11 +28,15 @@ let BlogStandalone = React.createClass({
             type: 'GET',
             success: function (data) {
                 this.setState({
-                    entry: data
+                    entry: data,
+                    error: false
                 });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(blogUrl, status, err.toString());
+                this.setState({
+                    error: true
+                });
             }.bind(this)
         });
     },
@@ -43,7 +49,17 @@ let BlogStandalone = React.createClass({
 
         if (this.state.entry) {
             description = this.state.entry.body.substring(0, 100) + "...";
-                title = this.state.entry.title + " | mattec.se";
+            title = this.state.entry.title + " | mattec.se";
+        }
+
+        let mainContent =
+            <BlogEntry
+                id={this.props.params.id}
+                entry={this.state.entry}
+                isStandalone={true}/>;
+
+        if (this.state.error) {
+            mainContent = <BlogEntryNotFound/>;
         }
 
         return (
@@ -58,10 +74,7 @@ let BlogStandalone = React.createClass({
                     ]} />
                 }
                 main={
-                    <BlogEntry
-                        id={this.props.params.id}
-                        entry={this.state.entry}
-                        isStandalone={true}/>
+                mainContent
                 }
                 />
         );

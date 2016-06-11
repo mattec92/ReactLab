@@ -9,7 +9,8 @@ import Blog from './blog.js'
 let BlogList = React.createClass({
     getInitialState() {
         return {
-            entries: []
+            entries: [],
+            error: false
         };
     },
 
@@ -26,11 +27,15 @@ let BlogList = React.createClass({
             type: 'GET',
             success: function (data) {
                 this.setState({
-                    entries: data
+                    entries: data,
+                    error: false
                 });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(blogUrl, status, err.toString());
+                this.setState({
+                    error: true
+                });
             }.bind(this)
         });
     },

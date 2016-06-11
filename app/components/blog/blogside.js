@@ -5,11 +5,18 @@ import {Link} from 'react-router';
 let BlogSide = React.createClass({
     getAdminLink() {
         if (DEBUG) {
-            return(
-                <Link
-                    to={'blogadmin'}>
-                    Admin
-                </Link>
+            return (
+                <div>
+                    <Link
+                        to={'blogadmin'}>
+                        Admin
+                    </Link>
+                    <br/>
+                    <Link
+                        to={'blog/this-is-an-error'}>
+                        Not found
+                    </Link>
+                </div>
             );
         }
     },
