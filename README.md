@@ -3,7 +3,7 @@ Playground for React (and Node)
 
 Currently hosted at https://mattec.se/.
 
-#####Run:
+####Run
 ```
 npm install
 npm build
@@ -11,7 +11,7 @@ npm start
 ```
 
 
-#####Production build run:
+####Production build run
 ```
 npm install
 npm run prodbuild
@@ -19,14 +19,20 @@ npm start
 ```
 
 
-#####~~Run with webpack-dev-server:~~ Sorry, i broke it :(
+####~~Run with webpack-dev-server
+
+On terminal #1, start webpack-dev-server
 ```
 npm install
 npm run dev
 ```
 
-
-#####Site will be available at:
+On terminal #2, start express
 ```
-http://localhost:8080/
+npm start
+```
+
+Site will be available at
+```
+http://localhost:7070/
 ```
