@@ -1,9 +1,9 @@
 # ReactLab
-Playground for React (and Node)
+Playground for React and Node.js
 
 Currently hosted at https://mattec.se/.
 
-####Run
+###Run
 ```
 npm install
 npm build
@@ -11,7 +11,7 @@ npm start
 ```
 
 
-####Production build run
+###Production build run
 ```
 npm install
 npm run prodbuild
@@ -19,7 +19,7 @@ npm start
 ```
 
 
-####~~Run with webpack-dev-server
+###Run with webpack-dev-server
 
 On terminal #1, start webpack-dev-server
 ```
