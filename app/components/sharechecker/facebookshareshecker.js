@@ -33,12 +33,17 @@ let FacebookShareChecker = React.createClass({
     },
 
     requestStats() {
-        const url = 'http://graph.facebook.com/' + this.state.url;
+        const postData = {
+            url: this.state.url
+        };
+
+        const url = DEBUG ? 'http://localhost:8080/api/share' : '/api/share';
 
         $.ajax({
             url: url,
             dataType: 'json',
-            type: 'GET',
+            type: 'POST',
+            data: postData,
             success: function (data) {
                 this.setState({
                     result: data,
@@ -123,6 +128,7 @@ let FacebookShareChecker = React.createClass({
                         {this.state.errorText}
                     </h2>
                     <br/>
+
                     <p
                         style={styles.errorMessage}>
                         {this.state.errorMessage}

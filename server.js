@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const MongoDB = require('./mongo.js').MongoDB;
 const cors = require('cors');
 const utils = require('./utils.js');
+const request = require('request');
 
 const MAX_AUTH_ATTEMPTS = 5;
 const AUTH_COOLDOWN_TIME_MINUTES = 5;
@@ -424,7 +425,7 @@ app.delete('/api/blog', function (req, res) {
                                                 }
                                                 else {
                                                     entryCollection.remove(
-                                                        {id : id},
+                                                        {id: id},
                                                         function (error, result) {
                                                             if (error || !result) {
                                                                 res.status(404).json({error: 'Could not remove entry with id ' + id});
@@ -457,6 +458,18 @@ app.delete('/api/blog', function (req, res) {
             res.status(401).json({error: 'Auth failed'});
         }
     );
+});
+
+app.post('/api/share', function (req, res) {
+    const url = req.body.url;
+    request('http://graph.facebook.com/' + url, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.json(JSON.parse(body));
+        }
+        else {
+            res.status(response.statusCode).json(JSON.parse(body));
+        }
+    })
 });
 
 app.listen(app.get('port'), function () {
