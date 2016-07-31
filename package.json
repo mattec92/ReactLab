@@ -7,7 +7,7 @@
     "build": "webpack",
     "prodbuild": "NODE_ENV=production webpack",
     "start": "node server.js",
-    "dev": "webpack-dev-server --inline --hot --config webpack.config.js --content-base ./ --devtool eval --port 8080"
+    "dev": "webpack-dev-server --inline --hot --config webpack.config.js --content-base ./build --devtool eval --port 7070"
   },
   "author": "Mattias Cederlund",
   "license": "",
