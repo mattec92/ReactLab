@@ -1,6 +1,6 @@
 #!/bin/sh
 service nginx stop
-/letsencrypt/letsencrypt-auto renew -nvv --standalone > /var/log/letsencrypt/renew.log 2>&1
+sudo certbot renew > /var/log/letsencrypt/renew.log 2>&1
 LE_STATUS=$?
 service nginx start
 if [ "$LE_STATUS" != 0 ]; then
